@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head></head><body style=""><div id="motion-spec-prototype" data-document-file="test-1.html" data-github-path="test-1.html" class="edit-mode">
+<html><head></head><body><div id="motion-spec-prototype" data-document-file="test-1.html" data-github-path="test-1.html" class="edit-mode">
   <style>
     #motion-spec-prototype{--ms-bg:light-dark(#f3f4f7,#101114);--ms-panel:light-dark(#fff,#181a1f);--ms-panel2:light-dark(#f8f8fa,#202228);--ms-text:light-dark(#191a1e,#f4f5f7);--ms-muted:light-dark(#70737d,#9da1ac);--ms-line:light-dark(#e1e3e8,#30333b);--ms-accent:#7c5cff;--ms-cyan:#2dc3d1;--ms-orange:#ff9e5e;--ms-green:#43c98b;color:var(--ms-text);font-family:Inter,ui-sans-serif,system-ui,sans-serif;background:var(--ms-bg);border:1px solid var(--ms-line);border-radius:18px;overflow:hidden;min-height:0;box-shadow:0 18px 50px #00000014;position:relative}
     #motion-spec-prototype *{box-sizing:border-box}
@@ -98,12 +98,13 @@
     @media(max-width:800px){#motion-spec-prototype .shell{grid-template-columns:190px minmax(0,1fr)}#motion-spec-prototype .left{width:190px;min-width:190px}#motion-spec-prototype .right{display:none}#motion-spec-prototype .tlbar{padding-inline:8px;gap:5px}#motion-spec-prototype .tlbar>span:not(.zoom){display:none}}
   </style>
   <div class="top">
-    <div><div class="title" id="documentTitle" contenteditable="true" spellcheck="false" aria-label="动效文档标题">test-1</div><div class="sub" id="lastSaved">最后保存 2026年08月24日 18:14</div></div>
+    <div><div class="title" id="documentTitle" contenteditable="true" spellcheck="false" aria-label="动效文档标题">test-1</div><div class="sub" id="lastSaved">最后保存 2026年08月24日 18:19</div></div>
     <div class="top-actions"><button id="forceRefreshBtn" type="button" aria-label="强制刷新" title="强制刷新"><span aria-hidden="true">↻</span></button><button id="enterEditBtn" aria-label="编辑" title="编辑"><span aria-hidden="true">✎</span></button><div class="mode-edit-actions"><button id="exitEditBtn">退出编辑</button><button id="exportBtn" class="primary">保存并导出</button></div></div>
   </div>
   <div class="toast" id="toast">已复制结构化参数</div>
-  <div class="segment-tip" id="segmentTip" role="tooltip" style="display: none; left: 318.5px; top: 34px;"><div class="tip-title">新属性1 · 第 1 段</div><div class="tip-grid"><label>开始值<input data-field="from"></label><label>结束值<input data-field="to"></label><label class="wide">插值曲线<div class="curve-input-row"><input data-field="curve"><button class="curve-menu-btn" type="button" aria-label="选择曲线插值">⌄</button></div></label><label>开始时间<input data-field="start" inputmode="numeric"></label><label>持续时长<input data-field="duration" inputmode="numeric"></label></div></div>
-  <div class="property-cell-tip" id="propertyCellTip" role="tooltip" style="display: none;"></div>
+  <div class="segment-tip" id="segmentTip" role="tooltip" style="display: none;"></div>
+  <div class="property-cell-tip" id="propertyCellTip" role="tooltip" style="display: none; left: 411px; top: 227px;">新属性1 · container
+0 → 100</div>
   <div class="curve-picker" id="curvePicker"><div class="curve-picker-head"><input id="curvePickerInput" aria-label="自定义曲线插值"></div><div class="curve-tabs"><button class="curve-tab active" type="button" data-curve-tab="bezier">贝塞尔曲线</button><button class="curve-tab" type="button" data-curve-tab="spring">弹性曲线</button></div><div class="curve-options" id="curvePickerOptions"></div></div>
   <div class="shell">
     <aside class="left">
@@ -112,7 +113,7 @@
       <div class="section-head">元素</div>
       <div class="node checked" data-element-tab="all" hidden=""><span>▣</span><span class="element-label">整体名称</span><button class="element-check" aria-label="选择全部元素" aria-pressed="true">✓</button></div>
       <div class="indent">
-        <div class="node checked" data-element-tab="board" data-color="#7c5cff"><span class="dot"></span><span class="element-label" contenteditable="false">board</span><button class="element-check" aria-label="选择 board" aria-pressed="true">✓</button></div>
+        <div class="node checked" data-element-tab="container" data-color="#7c5cff"><span class="dot"></span><span class="element-label" contenteditable="false">container</span><button class="element-check" aria-label="选择 container" aria-pressed="true">✓</button></div>
         <div class="element-add-zone"><button class="element-add-button" id="addElementBtn" aria-label="新增元素">＋</button></div>
       </div>
     </aside>
@@ -128,30 +129,24 @@
         <div class="tracks"><div class="labels">
           <div class="ruler-label">属性</div><div class="empty-property-zone" id="emptyPropertyZone"><button class="empty-property-add" id="emptyPropertyAddBtn" type="button" aria-label="新增属性">＋</button></div>
           
-        <div class="track-label"><button type="button" class="row-handle" aria-label="拖动调整属性顺序" data-drag-bound="1">⠿</button><div class="property-title"><b contenteditable="false">position</b><span class="element-prefix">· board</span></div><span class="value-flow">0 → 300</span><button type="button" class="row-insert top" aria-label="在上方新增属性">+</button><button type="button" class="row-insert bottom" aria-label="在下方新增属性">+</button></div></div><div class="plot" id="plot" style="background-size: 20% 100%; width: 535px; min-width: 535px;">
+        <div class="track-label"><button type="button" class="row-handle" aria-label="拖动调整属性顺序" data-drag-bound="1">⠿</button><div class="property-title"><b contenteditable="false">opacity</b><span class="element-prefix">· container</span></div><span class="value-flow">0 → 100</span><button type="button" class="row-insert top" aria-label="在上方新增属性">+</button><button type="button" class="row-insert bottom" aria-label="在下方新增属性">+</button></div></div><div class="plot" id="plot" style="background-size: 20% 100%; width: 535px; min-width: 535px;">
           <div class="ruler" id="ruler"><span style="left: 0%; transform: none;">0</span><span style="left: 20%; transform: translateX(-50%);">100</span><span style="left: 40%; transform: translateX(-50%);">200</span><span style="left: 60%; transform: translateX(-50%);">300</span><span style="left: 80%; transform: translateX(-50%);">400</span><span style="left: 100%; transform: translateX(-100%);">500 ms</span></div>
           
-          <div class="lane" data-element="board" style="--element-color:#7c5cff;--element-fill:#7c5cff24;--element-border:#7c5cff88"><div class="bar" data-name="新属性1 · 第 1 段" data-from="0" data-to="300" data-curve="sineInOut (0.37, 0, 0.63, 1)" style="left: 0%; width: 60%; box-shadow: none;" aria-label="新属性1 · 第 1 段
-数值：0 → 300
+          <div class="lane" data-element="container" style="--element-color:#7c5cff;--element-fill:#7c5cff24;--element-border:#7c5cff88"><div class="bar compact" data-name="新属性1 · 第 1 段" data-from="0" data-to="100" data-curve="sineInOut (0.37, 0, 0.63, 1)" style="left: 0%; width: 20%; box-shadow: none;" aria-label="新属性1 · 第 1 段
+数值：0 → 100
 插值：sineInOut (0.37, 0, 0.63, 1)
-时间：0–300ms · 300ms" data-move-bound="1"><i class="kf start"></i><span class="bar-info"><span class="segment-values" style="font-size: 11px;"><em class="segment-from">0</em><i class="value-arrow" style="font-style:normal"> → </i><em class="segment-to">300</em></span><span class="segment-time">0–300ms · 300ms</span><b>sineInOut · (0.37, 0, 0.63, 1)</b></span><i class="kf end"></i></div><button class="lane-add" type="button" aria-label="增加分段" title="在最后分段后增加分段" style="left: 60%;">+</button></div><div class="playhead" id="playhead" hidden=""></div>
+时间：0–100ms · 100ms" data-move-bound="1"><i class="kf start"></i><span class="bar-info"><span class="segment-values" style="font-size: 11px;"><em class="segment-from">0</em><i class="value-arrow" style="font-style:normal"> → </i><em class="segment-to">100</em></span><span class="segment-time">0–100ms · 100ms</span><b>sineInOut · (0.37, 0, 0.63, 1)</b></span><i class="kf end"></i></div><button class="lane-add" type="button" aria-label="增加分段" title="在最后分段后增加分段" style="left: 20%;">+</button></div><div class="playhead" id="playhead" hidden=""></div>
         </div></div>
       </div>
     </main>
-    <aside class="right">
-      <div class="section-head"><span id="propTitle">新属性1 · 第 1 段</span><span id="elementName" style="color:var(--ms-muted);font-weight:500">board</span></div>
+    <aside class="right no-selection">
+      <div class="section-head"><span id="propTitle">元素属性</span><span id="elementName" style="color:var(--ms-muted);font-weight:500">container</span></div>
       <label>动画属性</label><input id="property" value="新属性1" autocomplete="off">
       <div class="pair"><div><label>初始值</label><input id="fromVal" value="0"></div><div><label>结束值</label><input id="toVal" value="100"></div></div>
       <div class="pair"><div><label>开始时间</label><input id="startVal" value="0 ms"></div><div><label>持续时长</label><input id="durationVal" value="100 ms"></div></div>
       <label>曲线插值</label><div class="curve-input-row"><input id="curveInput" autocomplete="off" value="sineInOut (0.37, 0, 0.63, 1)" aria-label="曲线插值"><button id="curveInputMenuBtn" class="curve-menu-btn" type="button" aria-label="选择曲线插值">⌄</button></div><select id="curveSelect" class="curve-storage" aria-hidden="true" tabindex="-1"><option value="sineInOut (0.37, 0, 0.63, 1)"></option></select><div id="curveCode" class="curve-storage">sineInOut (0.37, 0, 0.63, 1)</div>
       <div class="edit-actions"><button id="removeSegmentBtn" class="danger">删除分段</button><button id="removePropertyBtn" class="danger">删除属性</button></div>
-      <div id="code" hidden="">trigger: 
-element: board
-新属性1 · 第 1 段: 0 → 300
-start: 0ms
-duration: 300ms
-easing: sineInOut (0.37, 0, 0.63, 1)
-cubicBezier: []</div>
+      <div id="code" hidden=""></div>
     </aside>
   </div>
   <script>
@@ -163,7 +158,8 @@ cubicBezier: []</div>
     const openCurvePicker=(anchor,value,commit)=>{if(!isEditing)return;curvePickerCommit=commit;curvePickerInput.value=value;renderCurveOptions();curvePicker.classList.add('open');const rect=anchor.getBoundingClientRect(),pickerWidth=Math.min(360,window.innerWidth-16),pickerHeight=Math.min(360,curvePicker.scrollHeight||360);let left=Math.max(8,Math.min(window.innerWidth-pickerWidth-8,rect.left)),top=rect.bottom+6;if(top+pickerHeight>window.innerHeight-8)top=Math.max(8,rect.top-pickerHeight-6);curvePicker.style.left=left+'px';curvePicker.style.top=top+'px'};
     root.querySelectorAll('.curve-tab').forEach(tab=>tab.onclick=()=>{curvePickerTab=tab.dataset.curveTab;renderCurveOptions()});curvePickerInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();const value=curvePickerInput.value.trim();if(value){curvePickerCommit?.(value);closeCurvePicker()}}if(e.key==='Escape')closeCurvePicker()});curvePickerInput.addEventListener('change',()=>{const value=curvePickerInput.value.trim();if(value)curvePickerCommit?.(value)});curvePicker.addEventListener('click',e=>e.stopPropagation());
     const setEditMode=editing=>{isEditing=editing;root.classList.toggle('edit-mode',editing);root.classList.toggle('view-mode',!editing);root.querySelector('#documentTitle').contentEditable=String(editing);root.querySelector('#triggerDetail').contentEditable=String(editing);root.querySelectorAll('.right input,.right select,#totalDuration,.segment-tip input').forEach(control=>control.disabled=!editing);closeCurvePicker();hideTip();cellTip.style.display='none'};
-    root.querySelector('#enterEditBtn').onclick=()=>setEditMode(true);root.querySelector('#exitEditBtn').onclick=()=>location.reload();
+    const isEmbedded=window.self!==window.top,editButton=root.querySelector('#enterEditBtn');if(isEmbedded){editButton.setAttribute('aria-label','在新窗口编辑');editButton.title='在新窗口编辑'}
+    editButton.onclick=()=>{if(!isEmbedded){setEditMode(true);return}const url=new URL(window.location.href);url.searchParams.delete('_refresh');const opened=window.open(url.href,'_blank');if(opened)opened.opener=null;else{toast.textContent='浏览器阻止了新窗口，请允许弹出窗口后重试';toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),4500)}};root.querySelector('#exitEditBtn').onclick=()=>location.reload();
     root.addEventListener('dblclick',e=>{if(!isEditing&&e.target.closest('.element-label,.track-label b,.bar-info b,.segment-values em')){e.preventDefault();e.stopImmediatePropagation()}},true);
     root.addEventListener('pointerdown',e=>{if(!isEditing&&e.target.closest('.bar,.kf,.row-handle')){if(e.target.closest('.kf,.row-handle'))e.preventDefault();e.stopImmediatePropagation()}},true);
     document.addEventListener('keydown',e=>{if(!isEditing&&(e.key==='Delete'||e.key==='Backspace')){const tag=document.activeElement?.tagName;if(tag!=='INPUT'&&tag!=='SELECT'&&tag!=='TEXTAREA'&&!document.activeElement?.isContentEditable){e.preventDefault();e.stopImmediatePropagation()}}},true);
