@@ -96,10 +96,10 @@
     @media(max-width:800px){#motion-spec-prototype .shell{grid-template-columns:190px minmax(0,1fr)}#motion-spec-prototype .right{display:none}#motion-spec-prototype .tlbar{padding-inline:8px;gap:5px}#motion-spec-prototype .tlbar>span:not(.zoom){display:none}}
   </style>
   <div class="top">
-    <div><div class="title" id="documentTitle" contenteditable="true" spellcheck="false" aria-label="动效文档标题">new test</div><div class="sub" id="lastSaved">最后保存 2026年08月24日 17:12</div></div>
+    <div><div class="title" id="documentTitle" contenteditable="true" spellcheck="false" aria-label="动效文档标题">new test</div><div class="sub" id="lastSaved">最后保存 2026年08月24日 17:15</div></div>
     <div class="top-actions"><button id="enterEditBtn" aria-label="编辑" title="编辑"><span aria-hidden="true">✎</span></button><div class="mode-edit-actions"><button id="exitEditBtn">退出编辑</button><button id="exportBtn" class="primary">保存并导出</button></div></div>
   </div>
-  <div class="toast" id="toast">已复制结构化参数</div>
+  <div class="toast" id="toast">已保存并同步 GitHub · bed4030</div>
   <div class="segment-tip" id="segmentTip" role="tooltip" style="display: none;"></div>
   <div class="property-cell-tip" id="propertyCellTip" role="tooltip" style="display: none;"></div>
   <div class="curve-picker" id="curvePicker"><div class="curve-picker-head"><input id="curvePickerInput" aria-label="自定义曲线插值"></div><div class="curve-tabs"><button class="curve-tab active" type="button" data-curve-tab="bezier">贝塞尔曲线</button><button class="curve-tab" type="button" data-curve-tab="spring">弹性曲线</button></div><div class="curve-options" id="curvePickerOptions"></div></div>
@@ -111,7 +111,7 @@
       <div class="node checked" data-element-tab="all" hidden=""><span>▣</span><span class="element-label">整体名称</span><button class="element-check" aria-label="选择全部元素" aria-pressed="true">✓</button></div>
       <div class="indent">
         <div class="node checked" data-element-tab="新元素1" data-color="#7c5cff"><span class="dot"></span><span class="element-label">新元素1</span><button class="element-check" aria-label="选择 新元素1" aria-pressed="true">✓</button></div>
-        <div class="element-add-zone"><button class="element-add-button" id="addElementBtn" aria-label="新增元素">＋</button></div>
+        <div class="node checked" data-element-tab="新元素2" data-color="#43c98b"><span class="dot" style="background: rgb(67, 201, 139);"></span><span class="element-label">新元素2</span><button class="element-check" aria-pressed="true" aria-label="选择 新元素2">✓</button></div><div class="element-add-zone"><button class="element-add-button" id="addElementBtn" aria-label="新增元素">＋</button></div>
       </div>
     </aside>
     <main>
@@ -126,18 +126,18 @@
         <div class="tracks"><div class="labels">
           <div class="ruler-label">属性</div><div class="empty-property-zone" id="emptyPropertyZone"><button class="empty-property-add" id="emptyPropertyAddBtn" type="button" aria-label="新增属性">＋</button></div>
           
-        <div class="track-label"><button type="button" class="row-handle" aria-label="拖动调整属性顺序" data-drag-bound="1">⠿</button><div class="property-title"><b>新属性1</b><span class="element-prefix">· 新元素1</span></div><span class="value-flow">0 → 100</span><button type="button" class="row-insert top" aria-label="在上方新增属性">+</button><button type="button" class="row-insert bottom" aria-label="在下方新增属性">+</button></div></div><div class="plot" id="plot" style="background-size: 20% 100%; width: 664px; min-width: 664px;">
+        <div class="track-label"><button type="button" class="row-handle" aria-label="拖动调整属性顺序" data-drag-bound="1">⠿</button><div class="property-title"><b>新属性1</b><span class="element-prefix">· 新元素1</span></div><span class="value-flow">0 → 100</span><button type="button" class="row-insert top" aria-label="在上方新增属性">+</button><button type="button" class="row-insert bottom" aria-label="在下方新增属性">+</button></div><div class="track-label"><button type="button" class="row-handle" aria-label="拖动调整属性顺序" data-drag-bound="1">⠿</button><div class="property-title"><b>新属性2</b><span class="element-prefix">· 新元素2</span></div><span class="value-flow">尚未添加数值</span><button type="button" class="row-insert top" aria-label="在上方新增属性">+</button><button type="button" class="row-insert bottom" aria-label="在下方新增属性">+</button></div></div><div class="plot" id="plot" style="background-size: 20% 100%; width: 664px; min-width: 664px;">
           <div class="ruler" id="ruler"><span style="left: 0%; transform: none;">0</span><span style="left: 20%; transform: translateX(-50%);">100</span><span style="left: 40%; transform: translateX(-50%);">200</span><span style="left: 60%; transform: translateX(-50%);">300</span><span style="left: 80%; transform: translateX(-50%);">400</span><span style="left: 100%; transform: translateX(-100%);">500 ms</span></div>
           
           <div class="lane" data-element="新元素1" style="--element-color:#7c5cff;--element-fill:#7c5cff24;--element-border:#7c5cff88"><div class="bar compact" data-name="新属性1 · 第 1 段" data-from="0" data-to="100" data-curve="sineInOut (0.37, 0, 0.63, 1)" style="left: 0%; width: 20%; box-shadow: none;" aria-label="新属性1 · 第 1 段
 数值：0 → 100
 插值：sineInOut (0.37, 0, 0.63, 1)
-时间：0–100ms · 100ms" data-move-bound="1"><i class="kf start"></i><span class="bar-info"><span class="segment-values" style="font-size: 11px;"><em class="segment-from">0</em><i class="value-arrow" style="font-style:normal"> → </i><em class="segment-to">100</em></span><span class="segment-time">0–100ms · 100ms</span><b>sineInOut · (0.37, 0, 0.63, 1)</b></span><i class="kf end"></i></div><button class="lane-add" type="button" aria-label="增加分段" title="在最后分段后增加分段" style="left: 20%;">+</button></div><div class="playhead" id="playhead" hidden=""></div>
+时间：0–100ms · 100ms" data-move-bound="1"><i class="kf start"></i><span class="bar-info"><span class="segment-values" style="font-size: 11px;"><em class="segment-from">0</em><i class="value-arrow" style="font-style:normal"> → </i><em class="segment-to">100</em></span><span class="segment-time">0–100ms · 100ms</span><b>sineInOut · (0.37, 0, 0.63, 1)</b></span><i class="kf end"></i></div><button class="lane-add" type="button" aria-label="增加分段" title="在最后分段后增加分段" style="left: 20%;">+</button></div><div class="lane" data-element="新元素2" style="--element-color: #43c98b; --element-fill: #43c98b24; --element-border: #43c98b88;"><button class="lane-add" type="button" aria-label="增加分段" title="增加第一个分段" style="left: 0%;">+</button></div><div class="playhead" id="playhead" hidden=""></div>
         </div></div>
       </div>
     </main>
     <aside class="right no-selection">
-      <div class="section-head"><span id="propTitle">元素属性</span><span id="elementName" style="color:var(--ms-muted);font-weight:500">新元素1</span></div>
+      <div class="section-head"><span id="propTitle">已选元素属性</span><span id="elementName" style="color:var(--ms-muted);font-weight:500">2 个元素</span></div>
       <label>动画属性</label><input id="property" value="新属性1" autocomplete="off">
       <div class="pair"><div><label>初始值</label><input id="fromVal" value="0"></div><div><label>结束值</label><input id="toVal" value="100"></div></div>
       <div class="pair"><div><label>开始时间</label><input id="startVal" value="0 ms"></div><div><label>持续时长</label><input id="durationVal" value="100 ms"></div></div>
