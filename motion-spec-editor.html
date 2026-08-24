@@ -1,0 +1,1394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Motion Spec Editor</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts allow-downloads allow-same-origin" referrerpolicy="no-referrer" title="Motion Spec Editor" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Motion Spec Editor&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: var(--border-radius-lg, 12.5px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress {
+  display: flex;
+  height: 6px;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: 16px !important;
+  height: 16px !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;motion-spec-prototype&quot;&gt;
+  &lt;style&gt;
+    #motion-spec-prototype{--ms-bg:light-dark(#f3f4f7,#101114);--ms-panel:light-dark(#fff,#181a1f);--ms-panel2:light-dark(#f8f8fa,#202228);--ms-text:light-dark(#191a1e,#f4f5f7);--ms-muted:light-dark(#70737d,#9da1ac);--ms-line:light-dark(#e1e3e8,#30333b);--ms-accent:#7c5cff;--ms-cyan:#2dc3d1;--ms-orange:#ff9e5e;--ms-green:#43c98b;color:var(--ms-text);font-family:Inter,ui-sans-serif,system-ui,sans-serif;background:var(--ms-bg);border:1px solid var(--ms-line);border-radius:18px;overflow:hidden;min-height:0;box-shadow:0 18px 50px #00000014;position:relative}
+    #motion-spec-prototype *{box-sizing:border-box}
+    #motion-spec-prototype button,#motion-spec-prototype input,#motion-spec-prototype select{font:inherit;color:inherit}
+    #motion-spec-prototype .top{height:64px;background:var(--ms-panel);display:flex;align-items:center;gap:14px;padding:0 20px;border-bottom:1px solid var(--ms-line)}
+    #motion-spec-prototype .logo{width:32px;height:32px;border-radius:9px;background:linear-gradient(145deg,var(--ms-accent),#b59fff);display:grid;place-items:center;color:white;font-weight:900}
+    #motion-spec-prototype .title{font-size:15px;font-weight:750;white-space:nowrap}#motion-spec-prototype .title[contenteditable=&quot;true&quot;]{outline:none;background:transparent;border-radius:3px;cursor:text}#motion-spec-prototype .title[contenteditable=&quot;true&quot;]:hover{text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}#motion-spec-prototype .title[contenteditable=&quot;true&quot;]:focus{box-shadow:inset 0 -1px var(--ms-accent);text-decoration:none}.sub{font-size:11px;color:var(--ms-muted);margin-top:2px}
+    #motion-spec-prototype .top-actions{margin-left:auto;display:flex;gap:8px}
+    #motion-spec-prototype button{border:1px solid var(--ms-line);background:var(--ms-panel2);border-radius:9px;padding:8px 12px;cursor:pointer}
+    #motion-spec-prototype button.primary{background:var(--ms-accent);border-color:var(--ms-accent);color:#fff;font-weight:700}
+    #motion-spec-prototype .mode-edit-actions{display:none;gap:8px}#motion-spec-prototype.edit-mode .mode-edit-actions{display:flex}#motion-spec-prototype.edit-mode #enterEditBtn{display:none}
+    #motion-spec-prototype #enterEditBtn{width:34px;height:34px;padding:0;display:grid;place-items:center;background:var(--ms-panel2);border-color:var(--ms-line);color:var(--ms-text);font-size:18px;font-weight:500}
+    #motion-spec-prototype.view-mode .element-add-zone,#motion-spec-prototype.view-mode .row-handle,#motion-spec-prototype.view-mode .row-insert,#motion-spec-prototype.view-mode .lane-add,#motion-spec-prototype.view-mode .edit-actions,#motion-spec-prototype.view-mode .video-actions,#motion-spec-prototype.view-mode .preview-empty button,#motion-spec-prototype.view-mode .curve-menu-btn,#motion-spec-prototype.view-mode .empty-property-zone{display:none!important}
+    #motion-spec-prototype.view-mode .bar{cursor:pointer}#motion-spec-prototype.view-mode .kf,#motion-spec-prototype.view-mode .segment-tip input{pointer-events:none;cursor:default}#motion-spec-prototype.view-mode .preview.has-video{grid-template-rows:minmax(0,1fr)}#motion-spec-prototype.view-mode .element-label:hover,#motion-spec-prototype.view-mode .segment-values em:hover,#motion-spec-prototype.view-mode .bar-info b:hover,#motion-spec-prototype.view-mode .track-label b:hover{text-decoration:none;cursor:default}
+    #motion-spec-prototype.view-mode input:disabled,#motion-spec-prototype.view-mode select:disabled{opacity:.72;cursor:default}
+    #motion-spec-prototype .shell{display:grid;grid-template-columns:260px minmax(420px,1fr) 276px;height:auto;align-items:stretch}
+    #motion-spec-prototype aside,#motion-spec-prototype main{min-width:0;min-height:0;background:var(--ms-panel)}
+    #motion-spec-prototype .left{border-right:1px solid var(--ms-line);padding:18px 14px}
+    #motion-spec-prototype .right{border-left:1px solid var(--ms-line);padding:18px 16px;overflow:auto;height:100%;max-height:100%}#motion-spec-prototype .right.no-selection&gt;*{display:none!important}
+    #motion-spec-prototype .section-head{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:750;margin-bottom:11px}
+    #motion-spec-prototype .plus{width:26px;height:26px;padding:0;font-size:18px;line-height:1}
+    #motion-spec-prototype .event{height:76px;border:1px solid var(--ms-line);background:var(--ms-panel2);border-radius:12px;padding:7px 8px;margin-bottom:16px;overflow:hidden}
+    #motion-spec-prototype .event [contenteditable=&quot;true&quot;]{height:100%;padding:0;border:0;border-radius:0;overflow:auto;color:var(--ms-text);background:transparent;font-size:11px;line-height:1.45;cursor:text;outline:none;box-shadow:none}#motion-spec-prototype .event:focus-within{border-color:var(--ms-accent);box-shadow:0 0 0 1px var(--ms-accent)}
+    #motion-spec-prototype #triggerDetail:empty:before{content:attr(data-placeholder);color:var(--ms-muted);pointer-events:none}
+    #motion-spec-prototype .node{display:flex;align-items:center;gap:9px;padding:9px 8px;border-radius:9px;font-size:12px}
+    #motion-spec-prototype .node.checked{background:#7c5cff0d;color:light-dark(#563bd6,#b9a9ff)}
+    #motion-spec-prototype .node.element-selected{background:#7c5cff1c;box-shadow:inset 3px 0 var(--ms-accent);font-weight:700}
+    #motion-spec-prototype .element-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.element-label:hover{text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;cursor:text}
+    #motion-spec-prototype .element-check{margin-left:auto;width:18px;height:18px;padding:0;border:1px solid var(--ms-line);border-radius:5px;background:var(--ms-panel);color:transparent;font-size:12px;display:grid;place-items:center;line-height:1}#motion-spec-prototype .element-check[aria-pressed=&quot;true&quot;]{background:var(--ms-accent);border-color:var(--ms-accent);color:#fff}#motion-spec-prototype .element-check.partial{background:#7c5cff30;border-color:#7c5cff88;color:var(--ms-accent)}
+    #motion-spec-prototype [data-element-tab=&quot;all&quot;]{display:none!important}
+    #motion-spec-prototype .element-add-zone{height:38px;display:grid;place-items:center;border-radius:9px;position:relative}.element-add-zone:hover{background:#7c5cff08}#motion-spec-prototype .element-add-button{width:26px;height:26px;padding:0;border-radius:50%;border:2px solid #fff;background:#7c5cff;opacity:0;visibility:hidden;box-shadow:0 0 0 3px #7c5cff30,0 4px 12px #0003;position:relative;font-size:0}#motion-spec-prototype .element-add-zone:hover .element-add-button,#motion-spec-prototype .element-add-button:focus-visible{opacity:1;visibility:visible}#motion-spec-prototype .element-add-button:before,#motion-spec-prototype .element-add-button:after{content:&quot;&quot;;position:absolute;left:50%;top:50%;width:11px;height:2px;border-radius:2px;background:#fff;transform:translate(-50%,-50%)}#motion-spec-prototype .element-add-button:after{transform:translate(-50%,-50%) rotate(90deg)}
+    #motion-spec-prototype .dot{width:8px;height:8px;border-radius:50%;background:var(--ms-accent)}
+    #motion-spec-prototype .indent{margin-left:0;border-left:0;padding-left:0}
+    #motion-spec-prototype main{display:flex;flex-direction:column;background:var(--ms-bg)}
+    #motion-spec-prototype .preview{height:68px;display:grid;place-items:center;position:relative;background:var(--ms-panel);transition:height .18s ease;overflow:hidden}
+    #motion-spec-prototype.view-mode .preview:not(.has-video){display:none}
+    #motion-spec-prototype .preview.has-video{height:255px;background:var(--ms-bg);grid-template-rows:minmax(0,1fr) 38px;place-items:stretch}
+    #motion-spec-prototype .preview-empty{display:flex;align-items:center;justify-content:center}
+    #motion-spec-prototype .preview-empty button{padding:7px 11px;color:var(--ms-muted);background:transparent}
+    #motion-spec-prototype .video-stage{display:none;min-width:0;min-height:0;overflow:hidden;place-items:center;background:light-dark(#eceef2,#0b0c0f)}
+    #motion-spec-prototype .preview.has-video .video-stage{display:grid}
+    #motion-spec-prototype .preview video{display:block;width:100%;height:100%;max-width:100%;max-height:100%;min-width:0;min-height:0;object-fit:contain;object-position:center;background:transparent;pointer-events:none}
+    #motion-spec-prototype .preview video::-webkit-media-controls,#motion-spec-prototype .preview video::-webkit-media-controls-enclosure{display:none!important}
+    #motion-spec-prototype .preview.has-video .preview-empty{display:none}
+    #motion-spec-prototype .video-actions{display:none;align-items:center;justify-content:flex-end;gap:7px;padding:4px 10px;background:var(--ms-panel);border-top:1px solid var(--ms-line)}
+    #motion-spec-prototype .preview.has-video .video-actions{display:flex}
+    #motion-spec-prototype .replace-video{padding:5px 9px}
+    #motion-spec-prototype .delete-video{padding:5px 9px;color:#ef5265}
+    #motion-spec-prototype .timeline{flex:none;background:var(--ms-panel);border-top:1px solid var(--ms-line);overflow:hidden}
+    #motion-spec-prototype .tlbar{height:43px;display:flex;align-items:center;padding:0 13px;border-bottom:1px solid var(--ms-line);gap:8px;font-size:11px}
+    #motion-spec-prototype .tlbar button{padding:4px 7px;font-size:11px;min-width:25px}#motion-spec-prototype .tlbar input{width:62px;padding:4px 6px;font-size:10px;text-align:right}.edit-actions{display:flex;gap:7px;margin-top:12px}.edit-actions button{flex:1;font-size:11px}.edit-actions .danger{color:#ef5265}
+    #motion-spec-prototype .video-toggle{position:relative;width:26px;height:26px;min-width:26px;padding:0;border-radius:50%;display:grid;place-items:center;color:var(--ms-text)}#motion-spec-prototype .video-toggle[hidden]{display:none!important}#motion-spec-prototype .video-toggle:before{content:&quot;&quot;;display:block;margin-left:2px;width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:8px solid currentColor}#motion-spec-prototype .video-toggle[data-state=&quot;playing&quot;]:before{width:3px;height:10px;margin-left:-5px;border:0;background:currentColor;box-shadow:6px 0 0 currentColor}#motion-spec-prototype .video-toggle:disabled{opacity:.35;cursor:not-allowed}
+    #motion-spec-prototype .zoom{margin-left:auto;color:var(--ms-muted)}
+    #motion-spec-prototype .tracks{display:grid;grid-template-columns:135px max-content;height:auto;overflow:auto}
+    #motion-spec-prototype .labels{border-right:1px solid var(--ms-line);position:sticky;left:0;z-index:20;background:var(--ms-panel)}#motion-spec-prototype .labels:after,#motion-spec-prototype .plot:after{content:&quot;&quot;;display:block;height:36px;background:var(--ms-panel)}#motion-spec-prototype .plot:after{position:relative;z-index:16}
+    #motion-spec-prototype .ruler-label{height:31px;border-bottom:1px solid var(--ms-line);padding:9px;color:var(--ms-muted);font-size:10px}
+    #motion-spec-prototype .track-label{height:72px;border-bottom:1px solid var(--ms-line);padding:8px 10px 8px 30px;font-size:11px;display:flex;flex-direction:column;justify-content:center;gap:5px;position:relative;cursor:default}
+    #motion-spec-prototype .track-label.multi{height:72px}
+    #motion-spec-prototype .track-label b{display:block;font-size:12px;margin:0}.track-label span{display:block;color:var(--ms-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    #motion-spec-prototype .property-title{display:flex;align-items:center;gap:4px;min-width:0;white-space:nowrap}.property-title .element-prefix{display:block;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ms-muted);font-size:10px;font-weight:600}.property-title b{display:block;flex:0 0 auto;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    #motion-spec-prototype .row-handle{position:absolute;left:5px;top:50%;width:20px;height:32px;transform:translateY(-50%);border:1px solid #7c5cff55;border-radius:6px;background:#7c5cff16;padding:0;color:#7c5cff;font-size:17px;font-weight:800;line-height:1;opacity:0;visibility:hidden;cursor:grab;display:grid;place-items:center;box-shadow:0 1px 4px #0001;z-index:6}#motion-spec-prototype .track-label.row-hover .row-handle,#motion-spec-prototype .row-handle:focus-visible{opacity:1;visibility:visible}#motion-spec-prototype .row-handle:active{cursor:grabbing;background:#7c5cff2d}#motion-spec-prototype .track-label.row-selected,#motion-spec-prototype .lane.row-selected{background-color:#7c5cff0d}#motion-spec-prototype .track-label.row-selected{box-shadow:inset 3px 0 var(--ms-accent)}#motion-spec-prototype .track-label.row-dragging{opacity:.55}#motion-spec-prototype .lane.row-dragging{opacity:.7}
+    #motion-spec-prototype .row-insert{position:absolute;left:50%;transform:translateX(-50%);width:26px;height:26px;padding:0;border:2px solid #fff;border-radius:50%;background:#7c5cff;color:#fff;font-size:0;line-height:1;display:none;place-items:center;z-index:25;box-shadow:0 0 0 3px #7c5cff30,0 4px 12px #0004}#motion-spec-prototype .row-insert:before,#motion-spec-prototype .row-insert:after{content:&quot;&quot;;position:absolute;left:50%;top:50%;width:11px;height:2px;border-radius:2px;background:#fff;transform:translate(-50%,-50%)}#motion-spec-prototype .row-insert:after{transform:translate(-50%,-50%) rotate(90deg)}#motion-spec-prototype .row-insert.top{top:-13px}#motion-spec-prototype .row-insert.bottom{bottom:-13px}#motion-spec-prototype .row-insert.visible{display:grid}#motion-spec-prototype .row-insert:hover{background:#6d4cec}
+    #motion-spec-prototype .empty-property-zone{position:absolute;left:0;right:0;top:31px;height:36px;display:none;place-items:center;z-index:30}#motion-spec-prototype .empty-property-zone.visible{display:grid}#motion-spec-prototype .empty-property-add{position:relative;width:26px;height:26px;padding:0;border:2px solid #fff;border-radius:50%;background:#7c5cff;font-size:0;box-shadow:0 0 0 3px #7c5cff30,0 4px 12px #0004}#motion-spec-prototype .empty-property-add:before,#motion-spec-prototype .empty-property-add:after{content:&quot;&quot;;position:absolute;left:50%;top:50%;width:11px;height:2px;border-radius:2px;background:#fff;transform:translate(-50%,-50%)}#motion-spec-prototype .empty-property-add:after{transform:translate(-50%,-50%) rotate(90deg)}#motion-spec-prototype .empty-property-add:hover{background:#6d4cec}
+    #motion-spec-prototype.row-reordering,#motion-spec-prototype.row-reordering *{cursor:grabbing!important}#motion-spec-prototype.segment-moving,#motion-spec-prototype.segment-moving *{cursor:grabbing!important}
+    #motion-spec-prototype .plot{position:relative;min-width:540px;background-image:linear-gradient(90deg,var(--ms-line) 1px,transparent 1px);background-size:25% 100%}
+    #motion-spec-prototype .ruler{height:31px;border-bottom:1px solid var(--ms-line);position:relative;color:var(--ms-muted);font-size:10px}
+    #motion-spec-prototype .ruler span{position:absolute;top:8px;white-space:nowrap;line-height:14px}
+    #motion-spec-prototype .lane{height:72px;border-bottom:1px solid var(--ms-line);position:relative}
+    #motion-spec-prototype .lane.multi{height:72px}
+    #motion-spec-prototype .lane-add{position:absolute;top:23px;width:26px;height:26px;padding:0;border-radius:50%;border:2px solid #fff;background:#7c5cff;color:#fff;font-size:0;line-height:1;opacity:0;visibility:hidden;pointer-events:none;transform:translateX(5px) scale(.9);transition:opacity .12s,transform .12s,box-shadow .12s;z-index:12;display:grid;place-items:center;box-shadow:0 2px 7px #0003;overflow:visible}#motion-spec-prototype .lane-add:before,#motion-spec-prototype .lane-add:after{content:&quot;&quot;;position:absolute;width:11px;height:2px;border-radius:2px;background:#fff}#motion-spec-prototype .lane-add:after{transform:rotate(90deg)}#motion-spec-prototype .lane-add.visible{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(5px) scale(1);box-shadow:0 0 0 3px #7c5cff30,0 4px 12px #0004}#motion-spec-prototype .lane-add:hover{background:#6d4cec}
+    #motion-spec-prototype .bar{position:absolute;top:9px;height:54px;border-radius:8px;background:#7c5cff24;border:1px solid #7c5cff88;display:flex;align-items:center;padding:5px 10px;font-size:9px;white-space:nowrap;cursor:grab;overflow:hidden}
+    #motion-spec-prototype .bar.cyan{background:#2dc3d122;border-color:#2dc3d199}.bar.orange{background:#ff9e5e22;border-color:#ff9e5e99}.bar.green{background:#43c98b22;border-color:#43c98b99}
+    #motion-spec-prototype .lane[data-element=&quot;Login Card&quot;]{--element-color:#7c5cff;--element-fill:#7c5cff24;--element-border:#7c5cff88}#motion-spec-prototype .lane[data-element=&quot;Logo&quot;]{--element-color:#2dc3d1;--element-fill:#2dc3d122;--element-border:#2dc3d199}#motion-spec-prototype .lane[data-element=&quot;Form&quot;]{--element-color:#ff9e5e;--element-fill:#ff9e5e22;--element-border:#ff9e5e99}#motion-spec-prototype .lane[data-element] .bar{background:var(--element-fill);border-color:var(--element-border);color:var(--element-color)}#motion-spec-prototype .lane[data-element] .bar-info span{color:color-mix(in srgb,var(--element-color) 68%,var(--ms-muted))}#motion-spec-prototype .lane[data-element] .kf{border-color:var(--element-color)}
+    #motion-spec-prototype .kf{width:12px;height:20px;position:absolute;top:16px;background:var(--ms-panel);border:2px solid var(--ms-accent);border-radius:4px;z-index:2;cursor:ew-resize;touch-action:none}.kf.end{right:-5px}.kf.start{left:-5px}.kf:hover{background:var(--ms-accent)}
+    #motion-spec-prototype .bar-info{overflow:hidden;min-width:0;flex:1;line-height:1.05}.bar-info b{display:block;font-size:9px;font-weight:400;line-height:1.05;overflow:hidden;text-overflow:ellipsis}.bar-info span{display:block;margin-top:1px;line-height:1.05;color:var(--ms-muted);overflow:hidden;text-overflow:ellipsis}
+    #motion-spec-prototype .segment-values{font-size:11px;font-weight:700;line-height:1.05}.segment-values em{font-style:normal;color:inherit}.segment-values em:hover,.bar-info b:hover,.track-label b:hover{text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px;cursor:text}[contenteditable=&quot;true&quot;]{outline:1px solid var(--ms-accent);outline-offset:2px;border-radius:2px;background:var(--ms-panel);color:var(--ms-text);overflow:visible!important;text-overflow:clip!important}
+    #motion-spec-prototype .bar.compact{overflow:hidden;min-width:0;padding:5px 10px}.bar.compact .bar-info{position:static;min-width:0;overflow:hidden}.bar.compact .bar-info b,.bar.compact .bar-info span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    #motion-spec-prototype .hold{position:absolute;top:34px;height:0;border-top:2px dashed var(--ms-muted);color:var(--ms-muted);font-size:9px;text-align:center}.hold:before,.hold:after{content:&quot;&quot;;position:absolute;top:-4px;width:6px;height:6px;border-radius:50%;background:var(--ms-muted)}.hold:before{left:-2px}.hold:after{right:-2px}.hold span{position:relative;top:7px;background:var(--ms-panel);padding:1px 5px;border-radius:4px;white-space:nowrap}
+    #motion-spec-prototype .playhead{position:absolute;left:0%;top:0;bottom:0;width:11px;transform:translateX(-5px);background:linear-gradient(90deg,transparent 5px,#ff5368 5px,#ff5368 6px,transparent 6px);z-index:15;cursor:ew-resize;touch-action:none}#motion-spec-prototype .playhead[hidden]{display:none!important}.playhead:before{content:&quot;&quot;;position:absolute;left:0;top:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid #ff5368}#motion-spec-prototype.scrubbing,#motion-spec-prototype.scrubbing *{cursor:ew-resize!important}
+    #motion-spec-prototype label{display:block;color:var(--ms-muted);font-size:10px;margin:12px 0 6px;text-transform:uppercase;letter-spacing:.04em}
+    #motion-spec-prototype input,#motion-spec-prototype select{width:100%;border:1px solid var(--ms-line);background:var(--ms-panel2);border-radius:8px;padding:8px 9px;font-size:12px;outline:none}
+    #motion-spec-prototype .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    #motion-spec-prototype .curve-code{margin-top:8px;padding:9px 10px;border:1px solid var(--ms-line);background:var(--ms-panel2);border-radius:8px;font:11px ui-monospace,SFMono-Regular,monospace;color:var(--ms-text)}
+    #motion-spec-prototype .curve-storage{display:none!important}#motion-spec-prototype #curveInput{font:11px ui-monospace,SFMono-Regular,monospace}
+    #motion-spec-prototype .curve-input-row{display:grid;grid-template-columns:minmax(0,1fr) 32px;gap:6px;align-items:center}#motion-spec-prototype .curve-input-row input{min-width:0}#motion-spec-prototype .curve-menu-btn{height:32px;padding:0;display:grid;place-items:center;font-size:11px}
+    #motion-spec-prototype .curve-picker{position:fixed;display:none;z-index:2147483647;width:min(360px,calc(100vw - 16px));max-height:360px;border:1px solid var(--ms-line);border-radius:10px;background:var(--ms-panel);box-shadow:0 10px 30px #0005;overflow:hidden}#motion-spec-prototype .curve-picker.open{display:block}#motion-spec-prototype .curve-picker-head{padding:9px;border-bottom:1px solid var(--ms-line)}#motion-spec-prototype .curve-picker-head input{font:11px ui-monospace,SFMono-Regular,monospace}#motion-spec-prototype .curve-tabs{display:flex;gap:3px;padding:6px 8px 0}#motion-spec-prototype .curve-tab{flex:1;border:0;border-bottom:2px solid transparent;border-radius:6px 6px 0 0;background:transparent;padding:7px;color:var(--ms-muted)}#motion-spec-prototype .curve-tab.active{border-bottom-color:var(--ms-accent);color:var(--ms-accent);background:#7c5cff10}#motion-spec-prototype .curve-options{max-height:250px;overflow:auto;padding:6px}#motion-spec-prototype .curve-option{display:block;width:100%;border:0;background:transparent;text-align:left;padding:7px 8px;border-radius:6px;font:10px ui-monospace,SFMono-Regular,monospace;color:var(--ms-text)}#motion-spec-prototype .curve-option:hover{background:#7c5cff16;color:var(--ms-accent)}
+    #motion-spec-prototype .devout{margin-top:16px;padding-top:14px;border-top:1px solid var(--ms-line)}
+    #motion-spec-prototype .code{font:10px/1.55 ui-monospace,SFMono-Regular,monospace;background:light-dark(#23252b,#0d0e11);color:#e9eafd;border-radius:9px;padding:10px;white-space:pre-wrap}
+    #motion-spec-prototype .toast{position:absolute;top:74px;right:18px;background:var(--ms-text);color:var(--ms-panel);padding:8px 12px;border-radius:8px;font-size:11px;opacity:0;transform:translateY(-5px);transition:.2s;z-index:10}.toast.show{opacity:1;transform:none}
+    #motion-spec-prototype .segment-tip{position:fixed;display:none;z-index:2147483646;width:278px;padding:10px;border:1px solid #454750;border-radius:9px;background:#202127;color:#fff;box-shadow:0 8px 24px #0006;font:10px/1.35 ui-sans-serif,system-ui,sans-serif;pointer-events:auto}#motion-spec-prototype .segment-tip .tip-title{font-weight:750;margin-bottom:8px}#motion-spec-prototype .segment-tip .tip-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}#motion-spec-prototype .segment-tip label{margin:0;color:#aeb1bb;font-size:9px;text-transform:none;letter-spacing:0}#motion-spec-prototype .segment-tip label.wide{grid-column:1/-1}#motion-spec-prototype .segment-tip input{display:block;width:100%;margin-top:3px;padding:6px 7px;border:1px solid #454750;border-radius:6px;background:#2a2c33;color:#fff;font:10px ui-monospace,SFMono-Regular,monospace}#motion-spec-prototype .segment-tip input:focus{outline:1px solid #8c73ff;border-color:#8c73ff}#motion-spec-prototype .segment-tip .curve-input-row{margin-top:3px}#motion-spec-prototype .segment-tip .curve-input-row input{margin-top:0}#motion-spec-prototype .segment-tip .curve-menu-btn{height:28px;background:#2a2c33;color:#fff;border-color:#454750}
+    #motion-spec-prototype .property-cell-tip{position:fixed;display:none;z-index:2147483646;max-width:300px;padding:8px 10px;border-radius:7px;background:#202127;color:#fff;box-shadow:0 6px 18px #0005;font:11px/1.55 ui-sans-serif,system-ui,sans-serif;white-space:pre-line;pointer-events:none}
+    @media(max-width:800px){#motion-spec-prototype .shell{grid-template-columns:190px 1fr}#motion-spec-prototype .right{display:none}}
+  &lt;/style&gt;
+  &lt;div class=&quot;top&quot;&gt;
+    &lt;div&gt;&lt;div class=&quot;title&quot; id=&quot;documentTitle&quot; contenteditable=&quot;false&quot; spellcheck=&quot;false&quot; aria-label=&quot;动效文档标题&quot;&gt;新动画&lt;/div&gt;&lt;div class=&quot;sub&quot; id=&quot;lastSaved&quot;&gt;最后保存 2026年08月24日 16:16&lt;/div&gt;&lt;/div&gt;
+    &lt;div class=&quot;top-actions&quot;&gt;&lt;button id=&quot;enterEditBtn&quot; aria-label=&quot;编辑&quot; title=&quot;编辑&quot;&gt;&lt;span aria-hidden=&quot;true&quot;&gt;✎&lt;/span&gt;&lt;/button&gt;&lt;div class=&quot;mode-edit-actions&quot;&gt;&lt;button id=&quot;exitEditBtn&quot;&gt;退出编辑&lt;/button&gt;&lt;button id=&quot;exportBtn&quot; class=&quot;primary&quot;&gt;保存并导出&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;toast&quot; id=&quot;toast&quot;&gt;已复制结构化参数&lt;/div&gt;
+  &lt;div class=&quot;segment-tip&quot; id=&quot;segmentTip&quot; role=&quot;tooltip&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;property-cell-tip&quot; id=&quot;propertyCellTip&quot; role=&quot;tooltip&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;curve-picker&quot; id=&quot;curvePicker&quot;&gt;&lt;div class=&quot;curve-picker-head&quot;&gt;&lt;input id=&quot;curvePickerInput&quot; aria-label=&quot;自定义曲线插值&quot;&gt;&lt;/div&gt;&lt;div class=&quot;curve-tabs&quot;&gt;&lt;button class=&quot;curve-tab active&quot; type=&quot;button&quot; data-curve-tab=&quot;bezier&quot;&gt;贝塞尔曲线&lt;/button&gt;&lt;button class=&quot;curve-tab&quot; type=&quot;button&quot; data-curve-tab=&quot;spring&quot;&gt;弹性曲线&lt;/button&gt;&lt;/div&gt;&lt;div class=&quot;curve-options&quot; id=&quot;curvePickerOptions&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&quot;shell&quot;&gt;
+    &lt;aside class=&quot;left&quot;&gt;
+      &lt;div class=&quot;section-head&quot;&gt;触发时机&lt;/div&gt;
+      &lt;div class=&quot;event&quot;&gt;&lt;div id=&quot;triggerDetail&quot; contenteditable=&quot;true&quot; spellcheck=&quot;false&quot; aria-label=&quot;触发时机说明&quot; data-placeholder=&quot;填写触发时机&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;section-head&quot;&gt;元素&lt;/div&gt;
+      &lt;div class=&quot;node&quot; data-element-tab=&quot;all&quot; hidden&gt;&lt;span&gt;▣&lt;/span&gt;&lt;span class=&quot;element-label&quot;&gt;整体名称&lt;/span&gt;&lt;button class=&quot;element-check&quot; aria-label=&quot;选择全部元素&quot; aria-pressed=&quot;true&quot;&gt;✓&lt;/button&gt;&lt;/div&gt;
+      &lt;div class=&quot;indent&quot;&gt;
+        &lt;div class=&quot;node checked&quot; data-element-tab=&quot;新元素1&quot; data-color=&quot;#7c5cff&quot;&gt;&lt;span class=&quot;dot&quot;&gt;&lt;/span&gt;&lt;span class=&quot;element-label&quot;&gt;新元素1&lt;/span&gt;&lt;button class=&quot;element-check&quot; aria-label=&quot;选择 新元素1&quot; aria-pressed=&quot;true&quot;&gt;✓&lt;/button&gt;&lt;/div&gt;
+        &lt;div class=&quot;element-add-zone&quot;&gt;&lt;button class=&quot;element-add-button&quot; id=&quot;addElementBtn&quot; aria-label=&quot;新增元素&quot;&gt;＋&lt;/button&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/aside&gt;
+    &lt;main&gt;
+      &lt;div class=&quot;preview&quot; id=&quot;demoPreview&quot;&gt;
+        &lt;div class=&quot;preview-empty&quot;&gt;&lt;button id=&quot;addDemoVideoBtn&quot; type=&quot;button&quot;&gt;＋ 添加 MP4 Demo&lt;/button&gt;&lt;/div&gt;
+        &lt;input id=&quot;demoVideoInput&quot; type=&quot;file&quot; accept=&quot;video/mp4,.mp4&quot; hidden&gt;
+        &lt;div class=&quot;video-stage&quot;&gt;&lt;video id=&quot;demoVideo&quot; preload=&quot;metadata&quot; playsinline disablepictureinpicture aria-label=&quot;Demo 动画视频&quot;&gt;&lt;/video&gt;&lt;/div&gt;
+        &lt;div class=&quot;video-actions&quot;&gt;&lt;button id=&quot;replaceDemoVideoBtn&quot; class=&quot;replace-video&quot; type=&quot;button&quot;&gt;更换视频&lt;/button&gt;&lt;button id=&quot;deleteDemoVideoBtn&quot; class=&quot;delete-video&quot; type=&quot;button&quot;&gt;删除视频&lt;/button&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;timeline&quot;&gt;
+        &lt;div class=&quot;tlbar&quot;&gt;&lt;b&gt;时间轴&lt;/b&gt;&lt;span&gt;｜&lt;/span&gt;&lt;label style=&quot;margin:0;text-transform:none;letter-spacing:0&quot;&gt;总时长 &lt;input id=&quot;totalDuration&quot; value=&quot;500 ms&quot;&gt;&lt;/label&gt;&lt;button id=&quot;videoToggleBtn&quot; class=&quot;video-toggle&quot; type=&quot;button&quot; data-state=&quot;paused&quot; aria-label=&quot;播放 Demo&quot; disabled hidden&gt;&lt;/button&gt;&lt;span class=&quot;zoom&quot;&gt;&lt;button id=&quot;zoomOut&quot; aria-label=&quot;缩小时间轴&quot;&gt;−&lt;/button&gt;　&lt;b id=&quot;zoomLabel&quot;&gt;100%&lt;/b&gt;　&lt;button id=&quot;zoomIn&quot; aria-label=&quot;放大时间轴&quot;&gt;＋&lt;/button&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;tracks&quot;&gt;&lt;div class=&quot;labels&quot;&gt;
+          &lt;div class=&quot;ruler-label&quot;&gt;属性&lt;/div&gt;&lt;div class=&quot;empty-property-zone&quot; id=&quot;emptyPropertyZone&quot;&gt;&lt;button class=&quot;empty-property-add&quot; id=&quot;emptyPropertyAddBtn&quot; type=&quot;button&quot; aria-label=&quot;新增属性&quot;&gt;＋&lt;/button&gt;&lt;/div&gt;
+          &lt;div class=&quot;track-label&quot;&gt;&lt;b&gt;新属性1&lt;/b&gt;&lt;span class=&quot;value-flow&quot;&gt;0 → 100&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;&lt;div class=&quot;plot&quot; id=&quot;plot&quot;&gt;
+          &lt;div class=&quot;ruler&quot; id=&quot;ruler&quot;&gt;&lt;span&gt;0&lt;/span&gt;&lt;span&gt;100&lt;/span&gt;&lt;span&gt;200&lt;/span&gt;&lt;span&gt;300&lt;/span&gt;&lt;span&gt;400&lt;/span&gt;&lt;span&gt;500 ms&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;lane&quot; data-element=&quot;新元素1&quot; style=&quot;--element-color:#7c5cff;--element-fill:#7c5cff24;--element-border:#7c5cff88&quot;&gt;&lt;div class=&quot;bar compact&quot; data-name=&quot;新属性1 · 第 1 段&quot; data-from=&quot;0&quot; data-to=&quot;100&quot; data-curve=&quot;sineInOut (0.37, 0, 0.63, 1)&quot; style=&quot;left:0%;width:20%&quot;&gt;&lt;i class=&quot;kf start&quot;&gt;&lt;/i&gt;&lt;span class=&quot;bar-info&quot;&gt;&lt;span class=&quot;segment-values&quot;&gt;&lt;em class=&quot;segment-from&quot;&gt;0&lt;/em&gt;&lt;i class=&quot;value-arrow&quot; style=&quot;font-style:normal&quot;&gt; → &lt;/i&gt;&lt;em class=&quot;segment-to&quot;&gt;100&lt;/em&gt;&lt;/span&gt;&lt;span class=&quot;segment-time&quot;&gt;0–100ms · 100ms&lt;/span&gt;&lt;b&gt;sineInOut · (0.37, 0, 0.63, 1)&lt;/b&gt;&lt;/span&gt;&lt;i class=&quot;kf end&quot;&gt;&lt;/i&gt;&lt;/div&gt;&lt;/div&gt;
+          &lt;div class=&quot;playhead&quot; id=&quot;playhead&quot; hidden&gt;&lt;/div&gt;
+        &lt;/div&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/main&gt;
+    &lt;aside class=&quot;right no-selection&quot;&gt;
+      &lt;div class=&quot;section-head&quot;&gt;&lt;span id=&quot;propTitle&quot;&gt;新属性1 · 第 1 段&lt;/span&gt;&lt;span id=&quot;elementName&quot; style=&quot;color:var(--ms-muted);font-weight:500&quot;&gt;新元素1&lt;/span&gt;&lt;/div&gt;
+      &lt;label&gt;动画属性&lt;/label&gt;&lt;input id=&quot;property&quot; value=&quot;新属性1&quot; autocomplete=&quot;off&quot;&gt;
+      &lt;div class=&quot;pair&quot;&gt;&lt;div&gt;&lt;label&gt;初始值&lt;/label&gt;&lt;input id=&quot;fromVal&quot; value=&quot;0&quot;&gt;&lt;/div&gt;&lt;div&gt;&lt;label&gt;结束值&lt;/label&gt;&lt;input id=&quot;toVal&quot; value=&quot;100&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;pair&quot;&gt;&lt;div&gt;&lt;label&gt;开始时间&lt;/label&gt;&lt;input id=&quot;startVal&quot; value=&quot;0 ms&quot;&gt;&lt;/div&gt;&lt;div&gt;&lt;label&gt;持续时长&lt;/label&gt;&lt;input id=&quot;durationVal&quot; value=&quot;100 ms&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;label&gt;曲线插值&lt;/label&gt;&lt;div class=&quot;curve-input-row&quot;&gt;&lt;input id=&quot;curveInput&quot; autocomplete=&quot;off&quot; value=&quot;sineInOut (0.37, 0, 0.63, 1)&quot; aria-label=&quot;曲线插值&quot;&gt;&lt;button id=&quot;curveInputMenuBtn&quot; class=&quot;curve-menu-btn&quot; type=&quot;button&quot; aria-label=&quot;选择曲线插值&quot;&gt;⌄&lt;/button&gt;&lt;/div&gt;&lt;select id=&quot;curveSelect&quot; class=&quot;curve-storage&quot; aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;&lt;option value=&quot;sineInOut (0.37, 0, 0.63, 1)&quot;&gt;&lt;/option&gt;&lt;/select&gt;&lt;div id=&quot;curveCode&quot; class=&quot;curve-storage&quot;&gt;sineInOut (0.37, 0, 0.63, 1)&lt;/div&gt;
+      &lt;div class=&quot;edit-actions&quot;&gt;&lt;button id=&quot;removeSegmentBtn&quot; class=&quot;danger&quot;&gt;删除分段&lt;/button&gt;&lt;button id=&quot;removePropertyBtn&quot; class=&quot;danger&quot;&gt;删除属性&lt;/button&gt;&lt;/div&gt;
+      &lt;div id=&quot;code&quot; hidden&gt;&lt;/div&gt;
+    &lt;/aside&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+  (()=&gt;{const root=document.getElementById(&#x27;motion-spec-prototype&#x27;);const preview=root.querySelector(&#x27;#demoPreview&#x27;),video=root.querySelector(&#x27;#demoVideo&#x27;),videoInput=root.querySelector(&#x27;#demoVideoInput&#x27;),videoToggle=root.querySelector(&#x27;#videoToggleBtn&#x27;),head=root.querySelector(&#x27;#playhead&#x27;),toast=root.querySelector(&#x27;#toast&#x27;),tip=root.querySelector(&#x27;#segmentTip&#x27;),cellTip=root.querySelector(&#x27;#propertyCellTip&#x27;),plot=root.querySelector(&#x27;#plot&#x27;),curvePicker=root.querySelector(&#x27;#curvePicker&#x27;),curvePickerInput=root.querySelector(&#x27;#curvePickerInput&#x27;),curvePickerOptions=root.querySelector(&#x27;#curvePickerOptions&#x27;);let demoVideoUrl,isScrubbing=false,isEditing=false,selectedBar,selectedLane,selectedElementName,tipTimer,cellTipTimer,tipPinned=false,totalDuration=500,zoomLevel=1,basePlotWidth=540,currentElement=&#x27;新元素1&#x27;,curvePickerCommit,curvePickerTab=&#x27;bezier&#x27;;const selectedLanes=new Set(),selectedElements=new Set([&#x27;新元素1&#x27;]);
+    const bezierCurves=[&#x27;linear (0, 0, 1, 1)&#x27;,&#x27;standard (0.34, 0.69, 0.1, 1)&#x27;,&#x27;ease (0.25, 0.1, 0.25, 1)&#x27;,&#x27;overshoot (0.3, 1.3, 0.3, 1)&#x27;,&#x27;smoothOut (0.33, 0, 0.25, 1)&#x27;,&#x27;smoothIn (0.75, 0, 0.67, 1)&#x27;,&#x27;sineIn (0.12, 0, 0.39, 0)&#x27;,&#x27;sineOut (0.61, 1, 0.88, 1)&#x27;,&#x27;sineInOut (0.37, 0, 0.63, 1)&#x27;,&#x27;quadIn (0.11, 0, 0.5, 0)&#x27;,&#x27;quadOut (0.5, 1, 0.89, 1)&#x27;,&#x27;quadInOut (0.45, 0, 0.55, 1)&#x27;,&#x27;cubicIn (0.32, 0, 0.67, 0)&#x27;,&#x27;cubicOut (0.33, 1, 0.68, 1)&#x27;,&#x27;cubicInOut (0.65, 0, 0.35, 1)&#x27;];
+    const springCurves=[&#x27;snip (200ms, 0.3)&#x27;,&#x27;zippy (300ms, 0.4)&#x27;,&#x27;dash (300ms, 0.2)&#x27;,&#x27;swiftly (400ms, 0.3)&#x27;,&#x27;snappy (400ms, 0.1)&#x27;,&#x27;gentle (500ms, 0.1)&#x27;,&#x27;floaty (600ms, 0.1)&#x27;,&#x27;glide (700ms, 0.1)&#x27;,&#x27;lush (800ms, 0.3)&#x27;,&#x27;sprightly (500ms, 0.7)&#x27;,&#x27;peppy (500ms, 0.6)&#x27;,&#x27;jumpy (500ms, 0.8)&#x27;,&#x27;bouncy (600ms, 0.8)&#x27;,&#x27;jolly (700ms, 0.9)&#x27;,&#x27;breezy (600ms, 0.2)&#x27;,&#x27;easey (700ms, 0.1)&#x27;,&#x27;cushy (800ms, 0.1)&#x27;,&#x27;mellow (800ms, 0.2)&#x27;,&#x27;plush (900ms, 0.1)&#x27;];
+    const closeCurvePicker=()=&gt;{curvePicker.classList.remove(&#x27;open&#x27;);curvePickerCommit=undefined};
+    const renderCurveOptions=()=&gt;{const values=curvePickerTab===&#x27;bezier&#x27;?bezierCurves:springCurves;curvePickerOptions.replaceChildren(...values.map(value=&gt;{const button=document.createElement(&#x27;button&#x27;);button.type=&#x27;button&#x27;;button.className=&#x27;curve-option&#x27;;button.textContent=value;button.onclick=()=&gt;{curvePickerInput.value=value;curvePickerCommit?.(value);closeCurvePicker()};return button}));root.querySelectorAll(&#x27;.curve-tab&#x27;).forEach(tab=&gt;tab.classList.toggle(&#x27;active&#x27;,tab.dataset.curveTab===curvePickerTab))};
+    const openCurvePicker=(anchor,value,commit)=&gt;{if(!isEditing)return;curvePickerCommit=commit;curvePickerInput.value=value;renderCurveOptions();curvePicker.classList.add(&#x27;open&#x27;);const rect=anchor.getBoundingClientRect(),pickerWidth=Math.min(360,window.innerWidth-16),pickerHeight=Math.min(360,curvePicker.scrollHeight||360);let left=Math.max(8,Math.min(window.innerWidth-pickerWidth-8,rect.left)),top=rect.bottom+6;if(top+pickerHeight&gt;window.innerHeight-8)top=Math.max(8,rect.top-pickerHeight-6);curvePicker.style.left=left+&#x27;px&#x27;;curvePicker.style.top=top+&#x27;px&#x27;};
+    root.querySelectorAll(&#x27;.curve-tab&#x27;).forEach(tab=&gt;tab.onclick=()=&gt;{curvePickerTab=tab.dataset.curveTab;renderCurveOptions()});curvePickerInput.addEventListener(&#x27;keydown&#x27;,e=&gt;{if(e.key===&#x27;Enter&#x27;){e.preventDefault();const value=curvePickerInput.value.trim();if(value){curvePickerCommit?.(value);closeCurvePicker()}}if(e.key===&#x27;Escape&#x27;)closeCurvePicker()});curvePickerInput.addEventListener(&#x27;change&#x27;,()=&gt;{const value=curvePickerInput.value.trim();if(value)curvePickerCommit?.(value)});curvePicker.addEventListener(&#x27;click&#x27;,e=&gt;e.stopPropagation());
+    const setEditMode=editing=&gt;{isEditing=editing;root.classList.toggle(&#x27;edit-mode&#x27;,editing);root.classList.toggle(&#x27;view-mode&#x27;,!editing);root.querySelector(&#x27;#documentTitle&#x27;).contentEditable=String(editing);root.querySelector(&#x27;#triggerDetail&#x27;).contentEditable=String(editing);root.querySelectorAll(&#x27;.right input,.right select,#totalDuration,.segment-tip input&#x27;).forEach(control=&gt;control.disabled=!editing);closeCurvePicker();hideTip();cellTip.style.display=&#x27;none&#x27;};
+    root.querySelector(&#x27;#enterEditBtn&#x27;).onclick=()=&gt;setEditMode(true);root.querySelector(&#x27;#exitEditBtn&#x27;).onclick=()=&gt;location.reload();
+    root.addEventListener(&#x27;dblclick&#x27;,e=&gt;{if(!isEditing&amp;&amp;e.target.closest(&#x27;.element-label,.track-label b,.bar-info b,.segment-values em&#x27;)){e.preventDefault();e.stopImmediatePropagation()}},true);
+    root.addEventListener(&#x27;pointerdown&#x27;,e=&gt;{if(!isEditing&amp;&amp;e.target.closest(&#x27;.bar,.kf,.row-handle&#x27;)){if(e.target.closest(&#x27;.kf,.row-handle&#x27;))e.preventDefault();e.stopImmediatePropagation()}},true);
+    document.addEventListener(&#x27;keydown&#x27;,e=&gt;{if(!isEditing&amp;&amp;(e.key===&#x27;Delete&#x27;||e.key===&#x27;Backspace&#x27;)){const tag=document.activeElement?.tagName;if(tag!==&#x27;INPUT&#x27;&amp;&amp;tag!==&#x27;SELECT&#x27;&amp;&amp;tag!==&#x27;TEXTAREA&#x27;&amp;&amp;!document.activeElement?.isContentEditable){e.preventDefault();e.stopImmediatePropagation()}}},true);
+    const chooseDemoVideo=()=&gt;videoInput.click();
+    const playbackLimit=()=&gt;Math.max(.001,Math.min(Number.isFinite(video.duration)&amp;&amp;video.duration&gt;0?video.duration:totalDuration/1000,totalDuration/1000));
+    const syncVideoToggle=playing=&gt;{videoToggle.dataset.state=playing?&#x27;playing&#x27;:&#x27;paused&#x27;;videoToggle.setAttribute(&#x27;aria-label&#x27;,playing?&#x27;暂停 Demo&#x27;:&#x27;播放 Demo&#x27;)};
+    const toggleDemoVideo=()=&gt;{if(!video.src||videoToggle.disabled)return;const limit=playbackLimit();if(video.currentTime&gt;=limit-.01)video.currentTime=0;video.paused?video.play().catch(()=&gt;{}):video.pause()};
+    const deleteDemoVideo=()=&gt;{video.pause();video.removeAttribute(&#x27;src&#x27;);video.removeAttribute(&#x27;data-file-name&#x27;);video.load();if(demoVideoUrl?.startsWith(&#x27;blob:&#x27;))URL.revokeObjectURL(demoVideoUrl);demoVideoUrl=undefined;videoInput.value=&#x27;&#x27;;preview.classList.remove(&#x27;has-video&#x27;);videoToggle.disabled=true;videoToggle.hidden=true;head.hidden=true;syncVideoToggle(false);head.style.left=&#x27;0%&#x27;;toast.textContent=&#x27;已删除 Demo 视频&#x27;;toast.classList.add(&#x27;show&#x27;);setTimeout(()=&gt;toast.classList.remove(&#x27;show&#x27;),1000)};
+    root.querySelector(&#x27;#addDemoVideoBtn&#x27;).onclick=chooseDemoVideo;root.querySelector(&#x27;#replaceDemoVideoBtn&#x27;).onclick=chooseDemoVideo;root.querySelector(&#x27;#deleteDemoVideoBtn&#x27;).onclick=deleteDemoVideo;videoToggle.onclick=toggleDemoVideo;
+    videoInput.addEventListener(&#x27;change&#x27;,e=&gt;{const file=e.target.files?.[0];if(!file)return;const isMp4=file.type===&#x27;video/mp4&#x27;||file.name.toLowerCase().endsWith(&#x27;.mp4&#x27;);if(!isMp4){toast.textContent=&#x27;请选择 MP4 视频&#x27;;toast.classList.add(&#x27;show&#x27;);setTimeout(()=&gt;toast.classList.remove(&#x27;show&#x27;),1300);e.target.value=&#x27;&#x27;;return}toast.textContent=&#x27;正在读取并内嵌 Demo…&#x27;;toast.classList.add(&#x27;show&#x27;);const reader=new FileReader();reader.onload=()=&gt;{demoVideoUrl=String(reader.result);video.src=demoVideoUrl;video.setAttribute(&#x27;src&#x27;,demoVideoUrl);video.dataset.fileName=file.name;video.load();preview.classList.add(&#x27;has-video&#x27;);videoToggle.hidden=false;videoToggle.disabled=false;head.hidden=false;syncVideoToggle(false);const estimated=((demoVideoUrl.length*3/4+document.documentElement.outerHTML.length)/1048576).toFixed(1);toast.textContent=&#x27;Demo 已内嵌 · 导出约 &#x27;+estimated+&#x27; MB&#x27;;setTimeout(()=&gt;toast.classList.remove(&#x27;show&#x27;),1800)};reader.onerror=()=&gt;{toast.textContent=&#x27;Demo 读取失败，请重试&#x27;;setTimeout(()=&gt;toast.classList.remove(&#x27;show&#x27;),1800)};reader.readAsDataURL(file);e.target.value=&#x27;&#x27;});
+    video.addEventListener(&#x27;loadedmetadata&#x27;,()=&gt;{videoToggle.hidden=false;videoToggle.disabled=false;head.hidden=false;if(video.currentTime&gt;playbackLimit())video.currentTime=playbackLimit()});video.addEventListener(&#x27;play&#x27;,()=&gt;syncVideoToggle(true));video.addEventListener(&#x27;pause&#x27;,()=&gt;syncVideoToggle(false));video.addEventListener(&#x27;ended&#x27;,()=&gt;{syncVideoToggle(false);head.style.left=&#x27;100%&#x27;});video.addEventListener(&#x27;timeupdate&#x27;,()=&gt;{const limit=playbackLimit();if(video.currentTime&gt;=limit-.005){if(!video.paused)video.pause();if(video.currentTime&gt;limit)video.currentTime=limit;head.style.left=&#x27;100%&#x27;;return}if(!isScrubbing)head.style.left=Math.min(100,video.currentTime/limit*100)+&#x27;%&#x27;});if(video.getAttribute(&#x27;src&#x27;)){videoToggle.hidden=false;videoToggle.disabled=false;head.hidden=false}
+    head.addEventListener(&#x27;pointerdown&#x27;,e=&gt;{e.preventDefault();e.stopPropagation();const rect=plot.getBoundingClientRect(),wasPlaying=!video.paused&amp;&amp;video.readyState&gt;0;isScrubbing=true;root.classList.add(&#x27;scrubbing&#x27;);if(wasPlaying)video.pause();head.setPointerCapture(e.pointerId);const scrub=clientX=&gt;{const progress=Math.max(0,Math.min(1,(clientX-rect.left)/rect.width));head.style.left=progress*100+&#x27;%&#x27;;if(video.readyState&gt;0)video.currentTime=progress*playbackLimit()};scrub(e.clientX);const move=ev=&gt;{ev.preventDefault();scrub(ev.clientX)};const up=()=&gt;{isScrubbing=false;root.classList.remove(&#x27;scrubbing&#x27;);head.removeEventListener(&#x27;pointermove&#x27;,move);head.removeEventListener(&#x27;pointerup&#x27;,up);head.removeEventListener(&#x27;pointercancel&#x27;,up);if(wasPlaying&amp;&amp;video.currentTime&lt;playbackLimit()-.01)video.play().catch(()=&gt;{})};head.addEventListener(&#x27;pointermove&#x27;,move);head.addEventListener(&#x27;pointerup&#x27;,up);head.addEventListener(&#x27;pointercancel&#x27;,up)});
+    const timing=bar=&gt;({start:Math.round(parseFloat(bar.style.left)*totalDuration/100),end:Math.round((parseFloat(bar.style.left)+parseFloat(bar.style.width))*totalDuration/100)}),baseName=bar=&gt;bar.dataset.name.split(&#x27; ·&#x27;)[0];
+    const syncRowSelection=()=&gt;{root.querySelectorAll(&#x27;.lane,.track-label&#x27;).forEach(x=&gt;x.classList.remove(&#x27;row-selected&#x27;));const lanes=[...root.querySelectorAll(&#x27;.plot .lane&#x27;)],labels=root.querySelectorAll(&#x27;.labels .track-label&#x27;);selectedLanes.forEach(lane=&gt;{lane.classList.add(&#x27;row-selected&#x27;);labels[lanes.indexOf(lane)]?.classList.add(&#x27;row-selected&#x27;)})};
+    const selectRow=(lane,keepSegment=false,mode=&#x27;replace&#x27;)=&gt;{selectedElementName=undefined;root.querySelectorAll(&#x27;[data-element-tab]&#x27;).forEach(n=&gt;n.classList.remove(&#x27;element-selected&#x27;));const lanes=[...root.querySelectorAll(&#x27;.plot .lane&#x27;)];if(mode===&#x27;toggle&#x27;){selectedLanes.has(lane)?selectedLanes.delete(lane):selectedLanes.add(lane)}else if(mode===&#x27;range&#x27;&amp;&amp;selectedLane){const a=lanes.indexOf(selectedLane),b=lanes.indexOf(lane);selectedLanes.clear();lanes.slice(Math.min(a,b),Math.max(a,b)+1).forEach(x=&gt;selectedLanes.add(x))}else{selectedLanes.clear();selectedLanes.add(lane)}selectedLane=lane;syncRowSelection();if(!keepSegment){selectedBar=null;root.querySelector(&#x27;.right&#x27;).classList.add(&#x27;no-selection&#x27;);root.querySelectorAll(&#x27;.bar&#x27;).forEach(x=&gt;x.style.boxShadow=&#x27;none&#x27;);tipPinned=false;hideTip()}};
+    const selectBar=bar=&gt;{selectedBar=bar;root.querySelector(&#x27;.right&#x27;).classList.remove(&#x27;no-selection&#x27;);selectRow(bar.closest(&#x27;.lane&#x27;),true);root.querySelectorAll(&#x27;.bar&#x27;).forEach(x=&gt;x.style.boxShadow=&#x27;none&#x27;);bar.style.boxShadow=&#x27;0 0 0 2px #7c5cff55&#x27;;const d=bar.dataset,t=timing(bar),element=bar.closest(&#x27;.lane&#x27;).dataset.element||&#x27;缺省名称&#x27;;root.querySelector(&#x27;#propTitle&#x27;).textContent=d.name;root.querySelector(&#x27;#property&#x27;).value=baseName(bar);root.querySelector(&#x27;#fromVal&#x27;).value=d.from;root.querySelector(&#x27;#toVal&#x27;).value=d.to;root.querySelector(&#x27;#startVal&#x27;).value=t.start+&#x27; ms&#x27;;root.querySelector(&#x27;#durationVal&#x27;).value=(t.end-t.start)+&#x27; ms&#x27;;root.querySelector(&#x27;#curveCode&#x27;).textContent=d.curve;const select=root.querySelector(&#x27;#curveSelect&#x27;);if([...select.options].some(o=&gt;o.value===d.curve))select.value=d.curve;root.querySelector(&#x27;#elementName&#x27;).textContent=element;const parts=d.curve.match(/^(.+?) \\((.+)\\)$/);root.querySelector(&#x27;#code&#x27;).textContent=`trigger: ${root.querySelector(&quot;#triggerDetail&quot;).textContent.trim()}\nelement: ${element}\n${d.name}: ${d.from} → ${d.to}\nstart: ${t.start}ms\nduration: ${t.end-t.start}ms\neasing: ${parts?parts[1]:d.curve}\ncubicBezier: [${parts?parts[2]:&#x27;&#x27;}]`};
+    const tipText=bar=&gt;{const t=timing(bar);return `${bar.dataset.name}\n数值：${bar.dataset.from} → ${bar.dataset.to}\n插值：${bar.dataset.curve}\n时间：${t.start}–${t.end}ms · ${t.end-t.start}ms`};
+    const showTip=bar=&gt;{clearTimeout(tipTimer);const t=timing(bar);tip.innerHTML=&#x27;&lt;div class=&quot;tip-title&quot;&gt;&lt;/div&gt;&lt;div class=&quot;tip-grid&quot;&gt;&lt;label&gt;开始值&lt;input data-field=&quot;from&quot;&gt;&lt;/label&gt;&lt;label&gt;结束值&lt;input data-field=&quot;to&quot;&gt;&lt;/label&gt;&lt;label class=&quot;wide&quot;&gt;插值曲线&lt;div class=&quot;curve-input-row&quot;&gt;&lt;input data-field=&quot;curve&quot;&gt;&lt;button class=&quot;curve-menu-btn&quot; type=&quot;button&quot; aria-label=&quot;选择曲线插值&quot;&gt;⌄&lt;/button&gt;&lt;/div&gt;&lt;/label&gt;&lt;label&gt;开始时间&lt;input data-field=&quot;start&quot; inputmode=&quot;numeric&quot;&gt;&lt;/label&gt;&lt;label&gt;持续时长&lt;input data-field=&quot;duration&quot; inputmode=&quot;numeric&quot;&gt;&lt;/label&gt;&lt;/div&gt;&#x27;;tip.querySelector(&#x27;.tip-title&#x27;).textContent=bar.dataset.name;tip.querySelector(&#x27;[data-field=&quot;from&quot;]&#x27;).value=bar.dataset.from;tip.querySelector(&#x27;[data-field=&quot;to&quot;]&#x27;).value=bar.dataset.to;const tipCurveInput=tip.querySelector(&#x27;[data-field=&quot;curve&quot;]&#x27;);tipCurveInput.value=bar.dataset.curve;tip.querySelector(&#x27;[data-field=&quot;start&quot;]&#x27;).value=t.start+&#x27; ms&#x27;;tip.querySelector(&#x27;[data-field=&quot;duration&quot;]&#x27;).value=(t.end-t.start)+&#x27; ms&#x27;;tip.querySelectorAll(&#x27;input&#x27;).forEach(input=&gt;input.addEventListener(&#x27;change&#x27;,()=&gt;{const field=input.dataset.field,value=input.value.trim();if(field===&#x27;from&#x27;||field===&#x27;to&#x27;||field===&#x27;curve&#x27;)bar.dataset[field]=value;if(field===&#x27;start&#x27;){const old=timing(bar),start=Math.max(0,Math.min(totalDuration-40,parseInt(value)||0));bar.style.left=start/totalDuration*100+&#x27;%&#x27;;bar.style.width=Math.max(40,old.end-start)/totalDuration*100+&#x27;%&#x27;}if(field===&#x27;duration&#x27;){const old=timing(bar),duration=Math.max(40,Math.min(totalDuration-old.start,parseInt(value)||40));bar.style.width=duration/totalDuration*100+&#x27;%&#x27;}refreshBar(bar);selectBar(bar)}));tip.querySelector(&#x27;.curve-menu-btn&#x27;).onclick=e=&gt;{e.stopPropagation();openCurvePicker(e.currentTarget,bar.dataset.curve,value=&gt;{bar.dataset.curve=value;tipCurveInput.value=value;refreshBar(bar);selectBar(bar)})};tip.style.display=&#x27;block&#x27;;const br=bar.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight;let left=br.left+br.width/2-w/2,top=br.top-h-8;left=Math.max(8,Math.min(window.innerWidth-w-8,left));if(top&lt;8)top=br.bottom+8;tip.style.left=left+&#x27;px&#x27;;tip.style.top=top+&#x27;px&#x27;};
+    const hideTip=()=&gt;{clearTimeout(tipTimer);tip.style.display=&#x27;none&#x27;};
+    const scheduleTipHide=()=&gt;{clearTimeout(tipTimer);tipTimer=setTimeout(()=&gt;{if(!tipPinned)hideTip()},180)};
+    tip.addEventListener(&#x27;mouseenter&#x27;,()=&gt;clearTimeout(tipTimer));tip.addEventListener(&#x27;mouseleave&#x27;,scheduleTipHide);tip.addEventListener(&#x27;click&#x27;,e=&gt;e.stopPropagation());
+    const layoutLabel=bar=&gt;{const plot=root.querySelector(&#x27;#plot&#x27;),px=plot.clientWidth*parseFloat(bar.style.width)/100,t=timing(bar),label=tipText(bar),values=bar.querySelector(&#x27;.segment-values&#x27;);bar.classList.toggle(&#x27;compact&#x27;,px&lt;190);bar.classList.remove(&#x27;label-before&#x27;,&#x27;label-low&#x27;);bar.setAttribute(&#x27;aria-label&#x27;,label);if(values&amp;&amp;values.clientWidth){values.style.fontSize=&#x27;11px&#x27;;if(values.scrollWidth&gt;values.clientWidth+1)values.style.fontSize=&#x27;10px&#x27;;if(values.scrollWidth&gt;values.clientWidth+1)values.style.fontSize=&#x27;9px&#x27;}};
+    const updateLaneAdd=lane=&gt;{const add=lane.querySelector(&#x27;.lane-add&#x27;);if(!add)return;const bars=[...lane.querySelectorAll(&#x27;.bar&#x27;)],lastEnd=bars.length?Math.max(...bars.map(b=&gt;timing(b).end)):0;add.style.left=Math.min(93,lastEnd/totalDuration*100)+&#x27;%&#x27;;add.title=bars.length?&#x27;在最后分段后增加分段&#x27;:&#x27;增加第一个分段&#x27;};
+    const updatePropertyLabel=lane=&gt;{const idx=[...root.querySelectorAll(&#x27;.plot .lane&#x27;)].indexOf(lane),label=root.querySelectorAll(&#x27;.labels .track-label&#x27;)[idx];if(!label)return;const nameEl=label.querySelector(&#x27;b&#x27;);let title=label.querySelector(&#x27;.property-title&#x27;),prefix=label.querySelector(&#x27;.element-prefix&#x27;);if(!title&amp;&amp;nameEl){title=document.createElement(&#x27;div&#x27;);title.className=&#x27;property-title&#x27;;label.insertBefore(title,nameEl);title.appendChild(nameEl)}if(!prefix&amp;&amp;title){prefix=document.createElement(&#x27;span&#x27;);prefix.className=&#x27;element-prefix&#x27;;title.appendChild(prefix)}if(prefix){prefix.textContent=&#x27;· &#x27;+(lane.dataset.element||&#x27;未归属&#x27;);title.appendChild(prefix)};let flow=label.querySelector(&#x27;.value-flow&#x27;);if(!flow){flow=document.createElement(&#x27;span&#x27;);flow.className=&#x27;value-flow&#x27;;label.appendChild(flow)}const bars=[...lane.querySelectorAll(&#x27;.bar&#x27;)].sort((a,b)=&gt;timing(a).start-timing(b).start);flow.textContent=bars.length?[bars[0].dataset.from,...bars.map(b=&gt;b.dataset.to)].join(&#x27; → &#x27;):&#x27;尚未添加数值&#x27;};
+    const updateHolds=lane=&gt;{lane.querySelectorAll(&#x27;.hold&#x27;).forEach(x=&gt;x.remove());const bars=[...lane.querySelectorAll(&#x27;.bar&#x27;)].sort((a,b)=&gt;timing(a).start-timing(b).start);bars.slice(0,-1).forEach((bar,i)=&gt;{const a=timing(bar),b=timing(bars[i+1]);if(b.start&gt;a.end){const hold=document.createElement(&#x27;div&#x27;),gap=b.start-a.end;hold.className=&#x27;hold&#x27;;hold.style.left=(a.end/totalDuration*100)+&#x27;%&#x27;;hold.style.width=(gap/totalDuration*100)+&#x27;%&#x27;;const value=bar.dataset.to;hold.innerHTML=`&lt;span&gt;保持 ${value} · ${gap}ms&lt;/span&gt;`;lane.appendChild(hold)}});updateLaneAdd(lane);updatePropertyLabel(lane)};
+    const ensureBarContent=bar=&gt;{const info=bar.querySelector(&#x27;.bar-info&#x27;);if(!info)return null;let curveEl=info.querySelector(&#x27;b&#x27;);if(!curveEl){curveEl=document.createElement(&#x27;b&#x27;)}let values=info.querySelector(&#x27;.segment-values&#x27;);if(!values){values=document.createElement(&#x27;span&#x27;);values.className=&#x27;segment-values&#x27;}let from=values.querySelector(&#x27;.segment-from&#x27;);if(!from){from=document.createElement(&#x27;em&#x27;);from.className=&#x27;segment-from&#x27;;values.appendChild(from)}if(!values.querySelector(&#x27;.value-arrow&#x27;)){const arrow=document.createElement(&#x27;i&#x27;);arrow.className=&#x27;value-arrow&#x27;;arrow.textContent=&#x27; → &#x27;;arrow.style.fontStyle=&#x27;normal&#x27;;values.appendChild(arrow)}let to=values.querySelector(&#x27;.segment-to&#x27;);if(!to){to=document.createElement(&#x27;em&#x27;);to.className=&#x27;segment-to&#x27;;values.appendChild(to)}let timeEl=info.querySelector(&#x27;.segment-time&#x27;);if(!timeEl){timeEl=[...info.children].find(el=&gt;el.tagName===&#x27;SPAN&#x27;&amp;&amp;!el.classList.contains(&#x27;segment-values&#x27;))||document.createElement(&#x27;span&#x27;);timeEl.classList.add(&#x27;segment-time&#x27;)}info.append(values,timeEl,curveEl);return {info,curveEl,values,from,to,timeEl}};
+    const refreshBar=bar=&gt;{const lane=bar.closest(&#x27;.lane&#x27;),parts=ensureBarContent(bar);if(!lane||!parts)return;const t=timing(bar),curve=bar.dataset.curve||&#x27;linear (0, 0, 1, 1)&#x27;;parts.curveEl.textContent=curve.replace(&#x27; (&#x27;,&#x27; · (&#x27;);parts.from.textContent=bar.dataset.from||&#x27;0&#x27;;parts.to.textContent=bar.dataset.to||&#x27;0&#x27;;parts.timeEl.textContent=`${t.start}–${t.end}ms · ${t.end-t.start}ms`;layoutLabel(bar);updateHolds(lane);if(tipPinned&amp;&amp;selectedBar===bar){if(needsTip(bar))showTip(bar);else{tipPinned=false;hideTip()}}};
+    const inlineEdit=(el,commit)=&gt;{if(el.isContentEditable)return;const original=el.textContent;el.contentEditable=&#x27;true&#x27;;el.focus();const range=document.createRange();range.selectNodeContents(el);const selection=getSelection();selection.removeAllRanges();selection.addRange(range);const key=e=&gt;{if(e.key===&#x27;Enter&#x27;){e.preventDefault();el.blur()}if(e.key===&#x27;Escape&#x27;){e.preventDefault();el.textContent=original;el.dataset.cancel=&#x27;1&#x27;;el.blur()}};el.addEventListener(&#x27;keydown&#x27;,key);el.addEventListener(&#x27;blur&#x27;,()=&gt;{el.contentEditable=&#x27;false&#x27;;el.removeEventListener(&#x27;keydown&#x27;,key);if(el.dataset.cancel){delete el.dataset.cancel;return}const value=el.textContent.trim();if(value)commit(value);else el.textContent=original},{once:true})};
+    const needsTip=bar=&gt;[...bar.querySelectorAll(&#x27;.bar-info b,.bar-info span&#x27;)].some(el=&gt;el.scrollWidth&gt;el.clientWidth+1);
+    const wireBar=bar=&gt;{const parts=ensureBarContent(bar);if(!parts)return;refreshBar(bar);parts.curveEl.addEventListener(&#x27;dblclick&#x27;,e=&gt;{e.preventDefault();e.stopPropagation();openCurvePicker(e.currentTarget,bar.dataset.curve,value=&gt;{bar.dataset.curve=value;refreshBar(bar);selectBar(bar)})});parts.from.addEventListener(&#x27;dblclick&#x27;,e=&gt;{e.preventDefault();e.stopPropagation();inlineEdit(e.currentTarget,value=&gt;{bar.dataset.from=value;refreshBar(bar);selectBar(bar)})});parts.to.addEventListener(&#x27;dblclick&#x27;,e=&gt;{e.preventDefault();e.stopPropagation();inlineEdit(e.currentTarget,value=&gt;{bar.dataset.to=value;refreshBar(bar);selectBar(bar)})});bar.addEventListener(&#x27;mouseenter&#x27;,()=&gt;{clearTimeout(tipTimer);tipTimer=setTimeout(()=&gt;{if(!tipPinned&amp;&amp;needsTip(bar))showTip(bar)},150)});bar.addEventListener(&#x27;mouseleave&#x27;,scheduleTipHide);bar.addEventListener(&#x27;click&#x27;,e=&gt;{e.stopPropagation();selectBar(bar);if(needsTip(bar)){tipPinned=true;showTip(bar)}else{tipPinned=false;hideTip()}});bar.querySelectorAll(&#x27;.kf&#x27;).forEach(handle=&gt;handle.addEventListener(&#x27;pointerdown&#x27;,e=&gt;{e.preventDefault();e.stopPropagation();selectBar(bar);tipPinned=false;hideTip();const plot=root.querySelector(&#x27;#plot&#x27;),rect=plot.getBoundingClientRect(),original=timing(bar),kind=handle.classList.contains(&#x27;start&#x27;)?&#x27;start&#x27;:&#x27;end&#x27;;handle.setPointerCapture(e.pointerId);const move=ev=&gt;{const ms=Math.round(Math.max(0,Math.min(totalDuration,(ev.clientX-rect.left)/rect.width*totalDuration))/10)*10;let start=original.start,end=original.end;if(kind===&#x27;start&#x27;)start=Math.min(ms,end-40);else end=Math.max(ms,start+40);bar.style.left=(start/totalDuration*100)+&#x27;%&#x27;;bar.style.width=((end-start)/totalDuration*100)+&#x27;%&#x27;;refreshBar(bar);selectBar(bar)};const up=()=&gt;{handle.removeEventListener(&#x27;pointermove&#x27;,move);handle.removeEventListener(&#x27;pointerup&#x27;,up)};handle.addEventListener(&#x27;pointermove&#x27;,move);handle.addEventListener(&#x27;pointerup&#x27;,up)}))};
+    const bindSegmentDrag=bar=&gt;{if(bar.dataset.moveBound)return;bar.dataset.moveBound=&#x27;1&#x27;;bar.addEventListener(&#x27;click&#x27;,e=&gt;{if(bar.dataset.justDragged){e.preventDefault();e.stopImmediatePropagation();delete bar.dataset.justDragged}},{capture:true});bar.addEventListener(&#x27;pointerdown&#x27;,e=&gt;{if(e.target.closest(&#x27;.kf,[contenteditable=&quot;true&quot;],.bar-info b,.segment-values em&#x27;))return;e.preventDefault();e.stopPropagation();selectBar(bar);const rect=plot.getBoundingClientRect(),origin=timing(bar),duration=origin.end-origin.start,startX=e.clientX;let moved=false;root.classList.add(&#x27;segment-moving&#x27;);document.body.style.userSelect=&#x27;none&#x27;;const move=ev=&gt;{ev.preventDefault();const delta=(ev.clientX-startX)/rect.width*totalDuration,newStart=Math.round(Math.max(0,Math.min(totalDuration-duration,origin.start+delta))/10)*10;moved=moved||Math.abs(ev.clientX-startX)&gt;3;bar.style.left=newStart/totalDuration*100+&#x27;%&#x27;;bar.style.width=duration/totalDuration*100+&#x27;%&#x27;;refreshBar(bar);selectBar(bar)};const up=()=&gt;{root.classList.remove(&#x27;segment-moving&#x27;);document.body.style.userSelect=&#x27;&#x27;;document.removeEventListener(&#x27;pointermove&#x27;,move,true);document.removeEventListener(&#x27;pointerup&#x27;,up,true);document.removeEventListener(&#x27;pointercancel&#x27;,up,true);if(moved)bar.dataset.justDragged=&#x27;1&#x27;};document.addEventListener(&#x27;pointermove&#x27;,move,true);document.addEventListener(&#x27;pointerup&#x27;,up,true);document.addEventListener(&#x27;pointercancel&#x27;,up,true)});};
+    root.querySelectorAll(&#x27;.bar&#x27;).forEach(bar=&gt;{wireBar(bar);bindSegmentDrag(bar)});
+    const wirePropertyLabel=(label,lane)=&gt;{const nameEl=label?.querySelector(&#x27;b&#x27;);if(!nameEl||!lane)return;nameEl.addEventListener(&#x27;dblclick&#x27;,e=&gt;{e.preventDefault();inlineEdit(e.currentTarget,value=&gt;{e.currentTarget.textContent=value;lane.querySelectorAll(&#x27;.bar&#x27;).forEach(bar=&gt;{const suffix=bar.dataset.name.slice(baseName(bar).length);bar.dataset.name=value+suffix;layoutLabel(bar)});if(selectedBar&amp;&amp;selectedBar.closest(&#x27;.lane&#x27;)===lane)selectBar(selectedBar)})})};
+    const wireRow=(label,lane)=&gt;{wirePropertyLabel(label,lane);const handle=document.createElement(&#x27;button&#x27;);handle.type=&#x27;button&#x27;;handle.className=&#x27;row-handle&#x27;;handle.textContent=&#x27;⠿&#x27;;handle.setAttribute(&#x27;aria-label&#x27;,&#x27;拖动调整属性顺序&#x27;);label.prepend(handle);const topInsert=document.createElement(&#x27;button&#x27;),bottomInsert=document.createElement(&#x27;button&#x27;);[topInsert,bottomInsert].forEach((btn,i)=&gt;{btn.type=&#x27;button&#x27;;btn.className=&#x27;row-insert &#x27;+(i?&#x27;bottom&#x27;:&#x27;top&#x27;);btn.textContent=&#x27;+&#x27;;btn.setAttribute(&#x27;aria-label&#x27;,i?&#x27;在下方新增属性&#x27;:&#x27;在上方新增属性&#x27;);btn.addEventListener(&#x27;click&#x27;,e=&gt;{e.preventDefault();e.stopPropagation();const index=[...root.querySelectorAll(&#x27;.plot .lane&#x27;)].indexOf(lane)+(i?1:0);addPropertyAt(index,lane.dataset.element)})});label.append(topInsert,bottomInsert);const enter=()=&gt;label.classList.add(&#x27;row-hover&#x27;),leave=()=&gt;label.classList.remove(&#x27;row-hover&#x27;);label.addEventListener(&#x27;mouseenter&#x27;,enter);label.addEventListener(&#x27;mouseleave&#x27;,leave);lane.addEventListener(&#x27;mouseenter&#x27;,enter);lane.addEventListener(&#x27;mouseleave&#x27;,leave);const boundaryMove=e=&gt;{const r=e.currentTarget.getBoundingClientRect(),y=e.clientY-r.top,threshold=11;topInsert.classList.toggle(&#x27;visible&#x27;,y&lt;=threshold);bottomInsert.classList.toggle(&#x27;visible&#x27;,y&gt;=r.height-threshold)};const boundaryLeave=()=&gt;setTimeout(()=&gt;{if(!lane.matches(&#x27;:hover&#x27;)&amp;&amp;!label.matches(&#x27;:hover&#x27;)&amp;&amp;!topInsert.matches(&#x27;:hover&#x27;))topInsert.classList.remove(&#x27;visible&#x27;);if(!lane.matches(&#x27;:hover&#x27;)&amp;&amp;!label.matches(&#x27;:hover&#x27;)&amp;&amp;!bottomInsert.matches(&#x27;:hover&#x27;))bottomInsert.classList.remove(&#x27;visible&#x27;)},80);label.addEventListener(&#x27;mousemove&#x27;,boundaryMove);lane.addEventListener(&#x27;mousemove&#x27;,boundaryMove);label.addEventListener(&#x27;mouseleave&#x27;,boundaryLeave);lane.addEventListener(&#x27;mouseleave&#x27;,boundaryLeave);label.addEventListener(&#x27;click&#x27;,e=&gt;{if(!e.target.closest(&#x27;.row-handle&#x27;))selectRow(lane)});lane.addEventListener(&#x27;click&#x27;,e=&gt;{if(!e.target.closest(&#x27;.bar,.lane-add,.row-insert&#x27;))selectRow(lane)});handle.addEventListener(&#x27;pointerdown&#x27;,e=&gt;{e.preventDefault();e.stopPropagation();selectRow(lane);handle.setPointerCapture(e.pointerId);label.classList.add(&#x27;row-dragging&#x27;);lane.classList.add(&#x27;row-dragging&#x27;);const move=ev=&gt;{const rows=[...root.querySelectorAll(&#x27;.plot .lane&#x27;)].filter(row=&gt;row!==lane),labels=[...root.querySelectorAll(&#x27;.labels .track-label&#x27;)].filter(item=&gt;item!==label);let insertIndex=rows.findIndex(row=&gt;{const r=row.getBoundingClientRect();return ev.clientY&lt;r.top+r.height/2});if(insertIndex&lt;0)insertIndex=rows.length;const beforeLane=rows[insertIndex],beforeLabel=labels[insertIndex];if(beforeLane){beforeLane.before(lane);beforeLabel.before(label)}else{root.querySelector(&#x27;#plot&#x27;).insertBefore(lane,head);root.querySelector(&#x27;.labels&#x27;).appendChild(label)}syncRowSelection()};const up=()=&gt;{label.classList.remove(&#x27;row-dragging&#x27;);lane.classList.remove(&#x27;row-dragging&#x27;);handle.releasePointerCapture(e.pointerId);handle.removeEventListener(&#x27;pointermove&#x27;,move);handle.removeEventListener(&#x27;pointerup&#x27;,up);syncRowSelection()};handle.addEventListener(&#x27;pointermove&#x27;,move);handle.addEventListener(&#x27;pointerup&#x27;,up)})};
+    const bindDocumentDrag=(label,lane)=&gt;{const handle=label.querySelector(&#x27;.row-handle&#x27;);if(!handle||handle.dataset.dragBound)return;handle.dataset.dragBound=&#x27;1&#x27;;handle.addEventListener(&#x27;pointerdown&#x27;,e=&gt;{e.preventDefault();e.stopImmediatePropagation();selectRow(lane);label.classList.add(&#x27;row-dragging&#x27;);lane.classList.add(&#x27;row-dragging&#x27;);root.classList.add(&#x27;row-reordering&#x27;);document.body.style.userSelect=&#x27;none&#x27;;document.body.style.cursor=&#x27;grabbing&#x27;;const move=ev=&gt;{ev.preventDefault();const rows=[...root.querySelectorAll(&#x27;.plot .lane&#x27;)].filter(row=&gt;row!==lane),labels=[...root.querySelectorAll(&#x27;.labels .track-label&#x27;)].filter(item=&gt;item!==label);let index=rows.findIndex(row=&gt;{const r=row.getBoundingClientRect();return ev.clientY&lt;r.top+r.height/2});if(index&lt;0)index=rows.length;const beforeLane=rows[index],beforeLabel=labels[index];if(beforeLane){beforeLane.before(lane);beforeLabel.before(label)}else{root.querySelector(&#x27;#plot&#x27;).insertBefore(lane,head);root.querySelector(&#x27;.labels&#x27;).appendChild(label)}syncRowSelection()};const up=()=&gt;{label.classList.remove(&#x27;row-dragging&#x27;);lane.classList.remove(&#x27;row-dragging&#x27;);root.classList.remove(&#x27;row-reordering&#x27;);document.body.style.userSelect=&#x27;&#x27;;document.body.style.cursor=&#x27;&#x27;;document.removeEventListener(&#x27;pointermove&#x27;,move,true);document.removeEventListener(&#x27;pointerup&#x27;,up,true);document.removeEventListener(&#x27;pointercancel&#x27;,up,true);syncRowSelection()};document.addEventListener(&#x27;pointermove&#x27;,move,true);document.addEventListener(&#x27;pointerup&#x27;,up,true);document.addEventListener(&#x27;pointercancel&#x27;,up,true)},{capture:true})};
+    const bindPropertyCellTip=(label,lane)=&gt;{label.addEventListener(&#x27;mouseenter&#x27;,()=&gt;{clearTimeout(cellTipTimer);cellTipTimer=setTimeout(()=&gt;{const title=label.querySelector(&#x27;.property-title&#x27;),flow=label.querySelector(&#x27;.value-flow&#x27;),truncated=[title,flow,title?.querySelector(&#x27;b&#x27;),title?.querySelector(&#x27;.element-prefix&#x27;)].some(el=&gt;el&amp;&amp;el.scrollWidth&gt;el.clientWidth+1);if(!truncated)return;cellTip.textContent=`${label.querySelector(&#x27;b&#x27;)?.textContent||&#x27;未命名属性&#x27;} · ${lane.dataset.element||&#x27;未归属&#x27;}\n${flow?.textContent||&#x27;尚未添加数值&#x27;}`;cellTip.style.display=&#x27;block&#x27;;const r=label.getBoundingClientRect(),w=cellTip.offsetWidth,h=cellTip.offsetHeight;cellTip.style.left=Math.max(8,Math.min(window.innerWidth-w-8,r.right+8))+&#x27;px&#x27;;cellTip.style.top=Math.max(8,Math.min(window.innerHeight-h-8,r.top+r.height/2-h/2))+&#x27;px&#x27;},150)});label.addEventListener(&#x27;mouseleave&#x27;,()=&gt;{clearTimeout(cellTipTimer);cellTip.style.display=&#x27;none&#x27;})};
+    root.querySelectorAll(&#x27;.plot .lane&#x27;).forEach((lane,i)=&gt;{const label=root.querySelectorAll(&#x27;.labels .track-label&#x27;)[i];wireRow(label,lane);bindDocumentDrag(label,lane);bindPropertyCellTip(label,lane)});
+    const childElementNodes=()=&gt;[...root.querySelectorAll(&#x27;[data-element-tab]:not([data-element-tab=&quot;all&quot;])&#x27;)];
+    const sortRowsByElementOrder=()=&gt;{const elementOrder=new Map(childElementNodes().map((node,index)=&gt;[node.dataset.elementTab,index])),lanes=[...root.querySelectorAll(&#x27;.plot .lane&#x27;)],labels=[...root.querySelectorAll(&#x27;.labels .track-label&#x27;)],pairs=lanes.map((lane,index)=&gt;({lane,label:labels[index],index}));pairs.sort((a,b)=&gt;(elementOrder.get(a.lane.dataset.element)??Number.MAX_SAFE_INTEGER)-(elementOrder.get(b.lane.dataset.element)??Number.MAX_SAFE_INTEGER)||a.index-b.index);pairs.forEach(({lane,label})=&gt;{root.querySelector(&#x27;.labels&#x27;).appendChild(label);plot.insertBefore(lane,head)})};
+    sortRowsByElementOrder();
+    const syncElementFilter=()=&gt;{const children=childElementNodes(),allNames=children.map(n=&gt;n.dataset.elementTab),allSelected=allNames.length&gt;0&amp;&amp;allNames.every(n=&gt;selectedElements.has(n)),someSelected=allNames.some(n=&gt;selectedElements.has(n)),allNode=root.querySelector(&#x27;[data-element-tab=&quot;all&quot;]&#x27;),allCheck=allNode.querySelector(&#x27;.element-check&#x27;);children.forEach(node=&gt;{const checked=selectedElements.has(node.dataset.elementTab);node.classList.toggle(&#x27;checked&#x27;,checked);const check=node.querySelector(&#x27;.element-check&#x27;);check.setAttribute(&#x27;aria-pressed&#x27;,String(checked));check.textContent=checked?&#x27;✓&#x27;:&#x27;&#x27;});allNode.classList.toggle(&#x27;checked&#x27;,allSelected);allCheck.setAttribute(&#x27;aria-pressed&#x27;,String(allSelected));allCheck.classList.toggle(&#x27;partial&#x27;,someSelected&amp;&amp;!allSelected);allCheck.textContent=allSelected?&#x27;✓&#x27;:someSelected?&#x27;−&#x27;:&#x27;&#x27;;const lanes=[...root.querySelectorAll(&#x27;.plot .lane&#x27;)],labels=root.querySelectorAll(&#x27;.labels .track-label&#x27;);lanes.forEach((lane,i)=&gt;{const visible=selectedElements.has(lane.dataset.element);lane.style.display=visible?&#x27;&#x27;:&#x27;none&#x27;;labels[i].style.display=visible?&#x27;&#x27;:&#x27;none&#x27;;updatePropertyLabel(lane)});if(selectedLane&amp;&amp;selectedLane.style.display===&#x27;none&#x27;){selectedBar=null;selectedLane=null;selectedLanes.clear();root.querySelector(&#x27;.right&#x27;).classList.add(&#x27;no-selection&#x27;);syncRowSelection();hideTip()}const names=[...selectedElements];root.querySelector(&#x27;#elementName&#x27;).textContent=names.length===0?&#x27;未选择元素&#x27;:names.length===1?names[0]:names.length+&#x27; 个元素&#x27;;root.querySelector(&#x27;#propTitle&#x27;).textContent=names.length===0?&#x27;无属性&#x27;:names.length===1?&#x27;元素属性&#x27;:&#x27;已选元素属性&#x27;};
+    root.querySelectorAll(&#x27;.element-check&#x27;).forEach(check=&gt;check.addEventListener(&#x27;click&#x27;,e=&gt;{e.preventDefault();e.stopPropagation();const node=check.closest(&#x27;[data-element-tab]&#x27;),name=node.dataset.elementTab;if(name===&#x27;all&#x27;){const names=childElementNodes().map(n=&gt;n.dataset.elementTab),allSelected=names.every(n=&gt;selectedElements.has(n));selectedElements.clear();if(!allSelected)names.forEach(n=&gt;selectedElements.add(n))}else{selectedElements.has(name)?selectedElements.delete(name):selectedElements.add(name);currentElement=name}syncElementFilter()}));
+    root.querySelectorAll(&#x27;.element-label&#x27;).forEach(label=&gt;label.addEventListener(&#x27;click&#x27;,()=&gt;{const node=label.closest(&#x27;[data-element-tab]&#x27;);if(node.dataset.elementTab===&#x27;all&#x27;)return;selectedElementName=node.dataset.elementTab;selectedBar=null;selectedLane=null;selectedLanes.clear();root.querySelector(&#x27;.right&#x27;).classList.add(&#x27;no-selection&#x27;);root.querySelectorAll(&#x27;.bar&#x27;).forEach(x=&gt;x.style.boxShadow=&#x27;none&#x27;);syncRowSelection();root.querySelectorAll(&#x27;[data-element-tab]&#x27;).forEach(n=&gt;n.classList.toggle(&#x27;element-selected&#x27;,n===node));hideTip()}));
+    root.querySelectorAll(&#x27;.element-label&#x27;).forEach(label=&gt;label.addEventListener(&#x27;dblclick&#x27;,e=&gt;{e.preventDefault();const node=label.closest(&#x27;[data-element-tab]&#x27;),oldName=node.dataset.elementTab;inlineEdit(label,newName=&gt;{if(oldName===&#x27;all&#x27;)return;node.dataset.elementTab=newName;node.querySelector(&#x27;.element-check&#x27;).setAttribute(&#x27;aria-label&#x27;,&#x27;选择 &#x27;+newName);if(selectedElements.delete(oldName))selectedElements.add(newName);root.querySelectorAll(&#x27;.plot .lane&#x27;).forEach(lane=&gt;{if(lane.dataset.element===oldName){const s=getComputedStyle(lane);[&#x27;--element-color&#x27;,&#x27;--element-fill&#x27;,&#x27;--element-border&#x27;].forEach(k=&gt;lane.style.setProperty(k,s.getPropertyValue(k)));lane.dataset.element=newName}});if(currentElement===oldName)currentElement=newName;if(selectedElementName===oldName)selectedElementName=newName;syncElementFilter()})}));
+    const wireAddedElement=node=&gt;{const check=node.querySelector(&#x27;.element-check&#x27;),label=node.querySelector(&#x27;.element-label&#x27;);check.addEventListener(&#x27;click&#x27;,e=&gt;{e.preventDefault();e.stopPropagation();const name=node.dataset.elementTab;selectedElements.has(name)?selectedElements.delete(name):selectedElements.add(name);currentElement=name;syncElementFilter()});label.addEventListener(&#x27;click&#x27;,()=&gt;{selectedElementName=node.dataset.elementTab;selectedBar=null;selectedLane=null;selectedLanes.clear();root.querySelector(&#x27;.right&#x27;).classList.add(&#x27;no-selection&#x27;);root.querySelectorAll(&#x27;.bar&#x27;).forEach(x=&gt;x.style.boxShadow=&#x27;none&#x27;);syncRowSelection();root.querySelectorAll(&#x27;[data-element-tab]&#x27;).forEach(n=&gt;n.classList.toggle(&#x27;element-selected&#x27;,n===node));hideTip()});label.addEventListener(&#x27;dblclick&#x27;,e=&gt;{e.preventDefault();const oldName=node.dataset.elementTab;inlineEdit(label,newName=&gt;{node.dataset.elementTab=newName;check.setAttribute(&#x27;aria-label&#x27;,&#x27;选择 &#x27;+newName);if(selectedElements.delete(oldName))selectedElements.add(newName);root.querySelectorAll(&#x27;.plot .lane&#x27;).forEach(lane=&gt;{if(lane.dataset.element===oldName)lane.dataset.element=newName});if(currentElement===oldName)currentElement=newName;if(selectedElementName===oldName)selectedElementName=newName;syncElementFilter()})})};
+    root.querySelector(&#x27;#addElementBtn&#x27;).onclick=()=&gt;{const names=childElementNodes().map(n=&gt;n.dataset.elementTab),used=new Set(childElementNodes().map(n=&gt;n.dataset.color)),palette=[&#x27;#43c98b&#x27;,&#x27;#ef6c9a&#x27;,&#x27;#4f8cff&#x27;,&#x27;#d7a62c&#x27;,&#x27;#9b6ee8&#x27;,&#x27;#e06f55&#x27;],color=palette.find(c=&gt;!used.has(c))||palette[names.length%palette.length];let index=names.length+1,name=&#x27;新元素&#x27;+index;while(names.includes(name))name=&#x27;新元素&#x27;+(++index);const node=document.createElement(&#x27;div&#x27;);node.className=&#x27;node checked&#x27;;node.dataset.elementTab=name;node.dataset.color=color;node.innerHTML=&#x27;&lt;span class=&quot;dot&quot;&gt;&lt;/span&gt;&lt;span class=&quot;element-label&quot;&gt;&lt;/span&gt;&lt;button class=&quot;element-check&quot; aria-pressed=&quot;true&quot;&gt;✓&lt;/button&gt;&#x27;;node.querySelector(&#x27;.dot&#x27;).style.background=color;node.querySelector(&#x27;.element-label&#x27;).textContent=name;node.querySelector(&#x27;.element-check&#x27;).setAttribute(&#x27;aria-label&#x27;,&#x27;选择 &#x27;+name);root.querySelector(&#x27;.element-add-zone&#x27;).before(node);wireAddedElement(node);selectedElements.add(name);currentElement=name;syncElementFilter();addPropertyAt(root.querySelectorAll(&#x27;.plot .lane&#x27;).length,name)};
+    syncElementFilter();
+    root.querySelectorAll(&#x27;.lane&#x27;).forEach(updateHolds);
+    new ResizeObserver(()=&gt;root.querySelectorAll(&#x27;.bar&#x27;).forEach(layoutLabel)).observe(root.querySelector(&#x27;#plot&#x27;));
+    const numeric=v=&gt;Math.max(0,Math.min(totalDuration,parseInt(v)||0));
+    root.querySelector(&#x27;#fromVal&#x27;).oninput=e=&gt;{if(selectedBar){selectedBar.dataset.from=e.target.value;refreshBar(selectedBar)}};
+    root.querySelector(&#x27;#toVal&#x27;).oninput=e=&gt;{if(selectedBar){selectedBar.dataset.to=e.target.value;refreshBar(selectedBar)}};
+    root.querySelector(&#x27;#startVal&#x27;).oninput=e=&gt;{if(selectedBar){const t=timing(selectedBar),duration=t.end-t.start,start=Math.min(numeric(e.target.value),totalDuration-duration);selectedBar.style.left=start/totalDuration*100+&#x27;%&#x27;;selectedBar.style.width=duration/totalDuration*100+&#x27;%&#x27;;refreshBar(selectedBar)}};
+    root.querySelectorAll(&#x27;#fromVal,#toVal,#startVal&#x27;).forEach(input=&gt;input.addEventListener(&#x27;blur&#x27;,()=&gt;{if(selectedBar)selectBar(selectedBar)}));
+    root.querySelector(&#x27;#durationVal&#x27;).onchange=e=&gt;{if(selectedBar){const t=timing(selectedBar),duration=Math.max(40,Math.min(numeric(e.target.value),totalDuration-t.start));selectedBar.style.width=duration/totalDuration*100+&#x27;%&#x27;;refreshBar(selectedBar);selectBar(selectedBar)}};
+    root.querySelector(&#x27;#curveSelect&#x27;).onchange=e=&gt;{if(selectedBar){selectedBar.dataset.curve=e.target.value;root.querySelector(&#x27;#curveCode&#x27;).textContent=e.target.value;refreshBar(selectedBar);selectBar(selectedBar)}};
+    const curveInput=root.querySelector(&#x27;#curveInput&#x27;),curveCode=root.querySelector(&#x27;#curveCode&#x27;);const applyCurveValue=value=&gt;{value=value.trim();if(!value||!selectedBar)return;selectedBar.dataset.curve=value;curveInput.value=value;curveCode.textContent=value;refreshBar(selectedBar);selectBar(selectedBar)},applyCurveInput=()=&gt;applyCurveValue(curveInput.value);curveInput.addEventListener(&#x27;change&#x27;,applyCurveInput);curveInput.addEventListener(&#x27;keydown&#x27;,e=&gt;{if(e.key===&#x27;Enter&#x27;){e.preventDefault();applyCurveInput();curveInput.blur()}});root.querySelector(&#x27;#curveInputMenuBtn&#x27;).onclick=e=&gt;{e.stopPropagation();openCurvePicker(e.currentTarget,curveInput.value,applyCurveValue)};new MutationObserver(()=&gt;{curveInput.value=curveCode.textContent}).observe(curveCode,{childList:true,characterData:true,subtree:true});
+    root.querySelector(&#x27;#property&#x27;).oninput=e=&gt;{if(selectedBar){const value=e.target.value,old=baseName(selectedBar),suffix=selectedBar.dataset.name.slice(old.length);selectedBar.dataset.name=value+suffix;const lane=selectedBar.closest(&#x27;.lane&#x27;),idx=[...root.querySelectorAll(&#x27;.plot .lane&#x27;)].indexOf(lane),label=root.querySelectorAll(&#x27;.labels .track-label&#x27;)[idx];label.querySelector(&#x27;b&#x27;).textContent=value;root.querySelector(&#x27;#propTitle&#x27;).textContent=selectedBar.dataset.name;layoutLabel(selectedBar)}};
+    const addSegmentToLane=lane=&gt;{const bars=[...lane.querySelectorAll(&#x27;.bar&#x27;)].sort((a,b)=&gt;timing(a).start-timing(b).start),previous=bars.at(-1),start=previous?timing(previous).end:0;if(start&gt;=totalDuration)return;const bar=document.createElement(&#x27;div&#x27;),idx=[...root.querySelectorAll(&#x27;.plot .lane&#x27;)].indexOf(lane),label=root.querySelectorAll(&#x27;.labels .track-label&#x27;)[idx],name=previous?baseName(previous):label.querySelector(&#x27;b&#x27;).textContent;lane.classList.add(&#x27;multi&#x27;);label.classList.add(&#x27;multi&#x27;);bar.className=&#x27;bar&#x27;;bar.dataset.name=name+&#x27; · 第 &#x27;+(bars.length+1)+&#x27; 段&#x27;;bar.dataset.from=previous?previous.dataset.to:&#x27;0&#x27;;bar.dataset.to=previous?previous.dataset.to:&#x27;100&#x27;;bar.dataset.curve=&#x27;sineInOut (0.37, 0, 0.63, 1)&#x27;;bar.style.left=start/totalDuration*100+&#x27;%&#x27;;bar.style.width=Math.min(160,totalDuration-start)/totalDuration*100+&#x27;%&#x27;;bar.innerHTML=&#x27;&lt;i class=&quot;kf start&quot;&gt;&lt;/i&gt;&lt;span class=&quot;bar-info&quot;&gt;&lt;b&gt;sineInOut · (0.37, 0, 0.63, 1)&lt;/b&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;i class=&quot;kf end&quot;&gt;&lt;/i&gt;&#x27;;lane.appendChild(bar);wireBar(bar);bindSegmentDrag(bar);refreshBar(bar);selectBar(bar)};
+    const ensureLaneAdd=lane=&gt;{if(lane.querySelector(&#x27;.lane-add&#x27;))return;const add=document.createElement(&#x27;button&#x27;);add.className=&#x27;lane-add&#x27;;add.type=&#x27;button&#x27;;add.setAttribute(&#x27;aria-label&#x27;,&#x27;增加分段&#x27;);add.textContent=&#x27;+&#x27;;add.addEventListener(&#x27;click&#x27;,e=&gt;{e.preventDefault();e.stopPropagation();addSegmentToLane(lane)});lane.appendChild(add);lane.addEventListener(&#x27;mouseenter&#x27;,()=&gt;{updateLaneAdd(lane);add.classList.add(&#x27;visible&#x27;)});lane.addEventListener(&#x27;mouseleave&#x27;,()=&gt;add.classList.remove(&#x27;visible&#x27;));updateLaneAdd(lane)};
+    root.querySelectorAll(&#x27;.plot .lane&#x27;).forEach(ensureLaneAdd);
+    root.addEventListener(&#x27;click&#x27;,e=&gt;{if(!e.target.closest(&#x27;.bar&#x27;)){tipPinned=false;hideTip()}if(!e.target.closest(&#x27;.curve-picker,.curve-menu-btn&#x27;))closeCurvePicker()});
+    const syncEmptyPropertyState=()=&gt;root.querySelector(&#x27;#emptyPropertyZone&#x27;).classList.toggle(&#x27;visible&#x27;,root.querySelectorAll(&#x27;.labels .track-label&#x27;).length===0);
+    root.querySelector(&#x27;#emptyPropertyAddBtn&#x27;).onclick=e=&gt;{e.preventDefault();e.stopPropagation();const owner=selectedElementName||[...selectedElements][0]||childElementNodes()[0]?.dataset.elementTab||currentElement;addPropertyAt(0,owner)};
+    const addPropertyAt=(index,ownerOverride)=&gt;{const count=root.querySelectorAll(&#x27;.labels .track-label&#x27;).length+1,name=&#x27;新属性&#x27;+count,label=document.createElement(&#x27;div&#x27;),lane=document.createElement(&#x27;div&#x27;),labels=[...root.querySelectorAll(&#x27;.labels .track-label&#x27;)],lanes=[...root.querySelectorAll(&#x27;.plot .lane&#x27;)],owner=ownerOverride||(lanes[index-1]||lanes[index])?.dataset.element||currentElement||&#x27;新元素1&#x27;,elementNode=childElementNodes().find(n=&gt;n.dataset.elementTab===owner),color=elementNode?.dataset.color||&#x27;#7c5cff&#x27;;label.className=&#x27;track-label&#x27;;label.innerHTML=`&lt;b&gt;${name}&lt;/b&gt;&lt;span class=&quot;value-flow&quot;&gt;0 → 100&lt;/span&gt;`;lane.className=&#x27;lane&#x27;;lane.dataset.element=owner;lane.style.setProperty(&#x27;--element-color&#x27;,color);lane.style.setProperty(&#x27;--element-fill&#x27;,color+&#x27;24&#x27;);lane.style.setProperty(&#x27;--element-border&#x27;,color+&#x27;88&#x27;);if(labels[index])labels[index].before(label);else root.querySelector(&#x27;.labels&#x27;).appendChild(label);if(lanes[index])lanes[index].before(lane);else root.querySelector(&#x27;#plot&#x27;).insertBefore(lane,head);wireRow(label,lane);bindDocumentDrag(label,lane);bindPropertyCellTip(label,lane);ensureLaneAdd(lane);updatePropertyLabel(lane);syncEmptyPropertyState();selectRow(lane)};
+    syncEmptyPropertyState();
+    const updateRuler=()=&gt;{const ruler=root.querySelector(&#x27;#ruler&#x27;),width=plot.getBoundingClientRect().width||plot.clientWidth||540,minTickGap=54;let step=100;while(step&lt;totalDuration&amp;&amp;step/totalDuration*width&lt;minTickGap)step+=100;const values=[];for(let value=0;value&lt;=totalDuration;value+=step)values.push(value);if(values[values.length-1]!==totalDuration){if(values.length&gt;1&amp;&amp;(totalDuration-values[values.length-1])/totalDuration*width&lt;minTickGap)values.pop();values.push(totalDuration)}ruler.replaceChildren(...values.map((value,index)=&gt;{const span=document.createElement(&#x27;span&#x27;);span.textContent=value+(index===values.length-1?&#x27; ms&#x27;:&#x27;&#x27;);span.style.left=value/totalDuration*100+&#x27;%&#x27;;span.style.transform=index===0?&#x27;none&#x27;:index===values.length-1?&#x27;translateX(-100%)&#x27;:&#x27;translateX(-50%)&#x27;;return span}));plot.style.backgroundSize=step/totalDuration*100+&#x27;% 100%&#x27;;root.querySelector(&#x27;#totalDuration&#x27;).value=totalDuration+&#x27; ms&#x27;};
+    const updateZoom=()=&gt;{basePlotWidth=Math.max(1,Math.floor(root.querySelector(&#x27;.timeline&#x27;).clientWidth-135));const width=Math.round(basePlotWidth*zoomLevel);plot.style.width=width+&#x27;px&#x27;;plot.style.minWidth=width+&#x27;px&#x27;;root.querySelector(&#x27;#zoomLabel&#x27;).textContent=Math.round(zoomLevel*100)+&#x27;%&#x27;;root.querySelector(&#x27;#zoomOut&#x27;).disabled=zoomLevel&lt;=.5;root.querySelector(&#x27;#zoomIn&#x27;).disabled=zoomLevel&gt;=2.5;root.querySelectorAll(&#x27;.bar&#x27;).forEach(layoutLabel);updateRuler()};
+    new ResizeObserver(updateRuler).observe(plot);new ResizeObserver(updateZoom).observe(root.querySelector(&#x27;.timeline&#x27;));
+    root.querySelector(&#x27;#totalDuration&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{const requested=Math.max(100,Math.min(10000,parseInt(e.target.value)||totalDuration)),bars=[...root.querySelectorAll(&#x27;.bar&#x27;)],oldTimes=bars.map(timing);totalDuration=requested;bars.forEach((bar,i)=&gt;{let start=Math.min(oldTimes[i].start,totalDuration-40),end=Math.min(oldTimes[i].end,totalDuration);if(end-start&lt;40)start=Math.max(0,end-40);bar.style.left=start/totalDuration*100+&#x27;%&#x27;;bar.style.width=(end-start)/totalDuration*100+&#x27;%&#x27;;refreshBar(bar)});const limit=playbackLimit();if(video.readyState&gt;0&amp;&amp;video.currentTime&gt;limit){video.pause();video.currentTime=limit}if(video.readyState&gt;0)head.style.left=Math.min(100,video.currentTime/limit*100)+&#x27;%&#x27;;updateRuler();root.querySelectorAll(&#x27;.lane&#x27;).forEach(updateHolds)});
+    root.querySelector(&#x27;#totalDuration&#x27;).addEventListener(&#x27;keydown&#x27;,e=&gt;{if(e.key===&#x27;Enter&#x27;){e.preventDefault();e.currentTarget.dispatchEvent(new Event(&#x27;change&#x27;,{bubbles:true}));e.currentTarget.blur()}});
+    root.querySelector(&#x27;#zoomOut&#x27;).onclick=()=&gt;{zoomLevel=Math.max(.5,zoomLevel-.25);updateZoom()};
+    root.querySelector(&#x27;#zoomIn&#x27;).onclick=()=&gt;{zoomLevel=Math.min(2.5,zoomLevel+.25);updateZoom()};
+    updateRuler();updateZoom();
+    const removeSelectedSegment=()=&gt;{if(!selectedBar)return;const lane=selectedBar.closest(&#x27;.lane&#x27;),bars=[...lane.querySelectorAll(&#x27;.bar&#x27;)],index=bars.indexOf(selectedBar),next=bars[index+1]||bars[index-1];selectedBar.remove();selectedBar=null;updateHolds(lane);if(next)selectBar(next);else root.querySelector(&#x27;.right&#x27;).classList.add(&#x27;no-selection&#x27;);toast.textContent=&#x27;已删除选中分段&#x27;;toast.classList.add(&#x27;show&#x27;);setTimeout(()=&gt;{toast.classList.remove(&#x27;show&#x27;);toast.textContent=&#x27;已复制结构化参数&#x27;},1000)};
+    root.querySelector(&#x27;#removeSegmentBtn&#x27;).onclick=removeSelectedSegment;
+    document.addEventListener(&#x27;keydown&#x27;,e=&gt;{if(e.key!==&#x27;Delete&#x27;&amp;&amp;e.key!==&#x27;Backspace&#x27;)return;const tag=document.activeElement?.tagName;if(tag===&#x27;INPUT&#x27;||tag===&#x27;SELECT&#x27;||tag===&#x27;TEXTAREA&#x27;||document.activeElement?.isContentEditable)return;if(selectedBar){e.preventDefault();removeSelectedSegment()}else if(selectedLane){e.preventDefault();removeSelectedProperty()}else if(selectedElementName){e.preventDefault();removeSelectedElement()}});
+    const removeSelectedProperty=()=&gt;{const lane=selectedLane||selectedBar?.closest(&#x27;.lane&#x27;);if(!lane)return;const idx=[...root.querySelectorAll(&#x27;.plot .lane&#x27;)].indexOf(lane),label=root.querySelectorAll(&#x27;.labels .track-label&#x27;)[idx];label?.remove();lane.remove();selectedLanes.clear();selectedBar=null;selectedLane=null;root.querySelector(&#x27;.right&#x27;).classList.add(&#x27;no-selection&#x27;);syncEmptyPropertyState();hideTip()};
+    const removeSelectedElement=()=&gt;{if(!selectedElementName)return;const name=selectedElementName,node=root.querySelector(`[data-element-tab=&quot;${CSS.escape(name)}&quot;]`),lanes=[...root.querySelectorAll(&#x27;.plot .lane&#x27;)],labels=root.querySelectorAll(&#x27;.labels .track-label&#x27;);lanes.forEach((lane,i)=&gt;{if(lane.dataset.element===name){labels[i]?.remove();lane.remove()}});node?.remove();selectedElements.delete(name);selectedElementName=undefined;if(currentElement===name)currentElement=childElementNodes()[0]?.dataset.elementTab||&#x27;新元素1&#x27;;syncEmptyPropertyState();syncElementFilter();toast.textContent=&#x27;已删除元素 &#x27;+name;toast.classList.add(&#x27;show&#x27;);setTimeout(()=&gt;{toast.classList.remove(&#x27;show&#x27;);toast.textContent=&#x27;已复制结构化参数&#x27;},1000)};
+    root.querySelector(&#x27;#removePropertyBtn&#x27;).onclick=removeSelectedProperty;
+    root.querySelectorAll(&#x27;#triggerDetail&#x27;).forEach(field=&gt;field.addEventListener(&#x27;input&#x27;,()=&gt;{if(!field.textContent.trim())field.innerHTML=&#x27;&#x27;;if(selectedBar)selectBar(selectedBar)}));
+    root.querySelector(&#x27;#documentTitle&#x27;).addEventListener(&#x27;keydown&#x27;,e=&gt;{if(e.key===&#x27;Enter&#x27;){e.preventDefault();e.currentTarget.blur()}});
+    const safeFileName=value=&gt;(value.trim()||&#x27;motion-spec&#x27;).replace(/[\\/:*?&quot;&lt;&gt;|]+/g,&#x27;-&#x27;).replace(/\s+/g,&#x27; &#x27;).slice(0,80);
+    const formatSaveTime=date=&gt;`最后保存 ${date.getFullYear()}年${String(date.getMonth()+1).padStart(2,&#x27;0&#x27;)}月${String(date.getDate()).padStart(2,&#x27;0&#x27;)}日 ${String(date.getHours()).padStart(2,&#x27;0&#x27;)}:${String(date.getMinutes()).padStart(2,&#x27;0&#x27;)}`;
+    const buildExportBlob=savedAt=&gt;{hideTip();cellTip.style.display=&#x27;none&#x27;;root.classList.remove(&#x27;scrubbing&#x27;,&#x27;row-reordering&#x27;,&#x27;segment-moving&#x27;);const clone=document.documentElement.cloneNode(true),cloneRoot=clone.querySelector(&#x27;#motion-spec-prototype&#x27;),cloneSaved=cloneRoot?.querySelector(&#x27;#lastSaved&#x27;);if(cloneSaved)cloneSaved.textContent=formatSaveTime(savedAt);cloneRoot?.querySelectorAll(&#x27;.row-selected,.row-hover,.row-dragging&#x27;).forEach(el=&gt;el.classList.remove(&#x27;row-selected&#x27;,&#x27;row-hover&#x27;,&#x27;row-dragging&#x27;));cloneRoot?.querySelectorAll(&#x27;.bar&#x27;).forEach(el=&gt;el.style.boxShadow=&#x27;none&#x27;);const cloneToast=cloneRoot?.querySelector(&#x27;#toast&#x27;);if(cloneToast)cloneToast.className=&#x27;toast&#x27;;const cloneTip=cloneRoot?.querySelector(&#x27;#segmentTip&#x27;);if(cloneTip)cloneTip.style.display=&#x27;none&#x27;;const cloneCellTip=cloneRoot?.querySelector(&#x27;#propertyCellTip&#x27;);if(cloneCellTip)cloneCellTip.style.display=&#x27;none&#x27;;return new Blob([&#x27;&lt;!doctype html&gt;\n&#x27;+clone.outerHTML],{type:&#x27;text/html;charset=utf-8&#x27;})};
+    const exportHtml=async()=&gt;{const title=root.querySelector(&#x27;#documentTitle&#x27;)?.textContent||&#x27;motion-spec&#x27;,fileName=safeFileName(title)+&#x27;.html&#x27;;let handle;if(&#x27;showSaveFilePicker&#x27; in window){try{handle=await window.showSaveFilePicker({suggestedName:fileName,types:[{description:&#x27;HTML 文件&#x27;,accept:{&#x27;text/html&#x27;:[&#x27;.html&#x27;]}}]})}catch(error){if(error?.name===&#x27;AbortError&#x27;)return}}const savedAt=new Date(),blob=buildExportBlob(savedAt),sizeMb=blob.size/1048576;if(sizeMb&gt;50&amp;&amp;!window.confirm(&#x27;导出文件约 &#x27;+sizeMb.toFixed(1)+&#x27; MB，视频内嵌会使保存较慢。仍要继续吗？&#x27;))return;try{if(handle){const writable=await handle.createWritable();await writable.write(blob);await writable.close()}else{const url=URL.createObjectURL(blob),a=document.createElement(&#x27;a&#x27;);a.href=url;a.download=fileName;document.body.appendChild(a);a.click();a.remove();setTimeout(()=&gt;URL.revokeObjectURL(url),30000)}root.querySelector(&#x27;#lastSaved&#x27;).textContent=formatSaveTime(savedAt);toast.textContent=&#x27;已保存并导出 · &#x27;+sizeMb.toFixed(1)+&#x27; MB&#x27;;toast.classList.add(&#x27;show&#x27;);setTimeout(()=&gt;toast.classList.remove(&#x27;show&#x27;),1800)}catch(error){toast.textContent=&#x27;保存失败，请重试&#x27;;toast.classList.add(&#x27;show&#x27;);setTimeout(()=&gt;toast.classList.remove(&#x27;show&#x27;),1800)}};
+    root.querySelector(&#x27;#exportBtn&#x27;).onclick=exportHtml;
+    setEditMode(false);
+  })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
